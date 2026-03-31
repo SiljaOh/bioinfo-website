@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Datenbank | Programmierpraktikum Bioinformatik</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root{
+--bio-green:#0d6b5c;
+--bio-green-light:#d4ede8;
+--bio-green-pale:#e8f6f3;
+--bio-teal:#2a9d8f;
+--bio-dark:#0f2926;
+--bio-deep:#0a1f1c;
+--text:#1a2e2a;
+--text-muted:#4a6560;
+--white:#ffffff;
+--border:#cfe3de;
+--shadow:0 10px 30px rgba(13,107,92,0.08);
+--radius:18px;
+--max-width:1100px;
+}
+
+*{box-sizing:border-box;}
+
+body{
+margin:0;
+font-family:"DM Sans", Arial, sans-serif;
+color:var(--text);
+background:linear-gradient(180deg,#f7fbfa 0%,#eef7f4 100%);
+line-height:1.6;
+}
+
+a{
+color:var(--bio-green);
+text-decoration:none;
+}
+
+a:hover{
+text-decoration:underline;
+}
+
+.container{
+width:min(var(--max-width),calc(100% - 2rem));
+margin:0 auto;
+}
+
+header{
+padding:2rem 0 1rem;
+}
+
+.topbar{
+display:flex;
+flex-wrap:wrap;
+align-items:center;
+justify-content:space-between;
+gap:1rem;
+margin-bottom:1.5rem;
+}
+
+.site-title{
+font-size:0.95rem;
+color:var(--text-muted);
+}
+
+.site-title strong{
+color:var(--bio-dark);
+}
+
+nav{
+display:flex;
+flex-wrap:wrap;
+gap:1rem;
+font-size:0.95rem;
+}
+
+.hero{
+background:var(--white);
+border:1px solid var(--border);
+border-radius:24px;
+padding:2rem;
+box-shadow:var(--shadow);
+}
+
+.hero h1{
+margin:0 0 0.75rem;
+font-size:clamp(2rem,4vw,3rem);
+line-height:1.1;
+color:var(--bio-deep);
+}
+
+.hero p{
+margin:0;
+max-width:800px;
+color:var(--text-muted);
+font-size:1.05rem;
+}
+
+main{
+padding:2rem 0 3rem;
+}
+
+section{
+margin-bottom:2rem;
+}
+
+.card{
+background:var(--white);
+border:1px solid var(--border);
+border-radius:var(--radius);
+padding:1.5rem;
+box-shadow:var(--shadow);
+}
+
+h2{
+margin-top:0;
+margin-bottom:1rem;
+color:var(--bio-dark);
+font-size:1.4rem;
+}
+
+.stats-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:1rem;
+}
+
+.stat-box{
+background:var(--bio-green-pale);
+border:1px solid var(--border);
+border-radius:16px;
+padding:1rem;
+}
+
+.stat-box .label{
+display:block;
+font-size:0.9rem;
+color:var(--text-muted);
+margin-bottom:0.35rem;
+}
+
+.stat-box .value{
+display:block;
+font-size:1.6rem;
+font-weight:700;
+color:var(--bio-dark);
+}
+
+.info-table{
+width:100%;
+border-collapse:collapse;
+margin-top:1rem;
+font-size:0.98rem;
+}
+
+.info-table th,
+.info-table td{
+text-align:left;
+padding:0.85rem 0.9rem;
+border-bottom:1px solid var(--border);
+vertical-align:top;
+}
+
+.info-table th{
+color:var(--bio-dark);
+background:var(--bio-green-pale);
+}
+
+pre{
+margin:1rem 0 0;
+padding:1rem;
+border-radius:14px;
+background:#0f1a18;
+color:#eaf7f3;
+overflow-x:auto;
+font-family:"JetBrains Mono", monospace;
+font-size:0.9rem;
+line-height:1.5;
+}
+
+.note{
+color:var(--text-muted);
+font-size:0.96rem;
+}
+
+footer{
+padding:1rem 0 2rem;
+color:var(--text-muted);
+font-size:0.92rem;
+text-align:center;
+}
+
+@media (max-width:700px){
+.hero,
+.card{
+padding:1.2rem;
+}
+
+.hero h1{
+font-size:2rem;
+}
+}
+</style>
+</head>
+
+<body>
+
+<header class="container">
+
+<div class="topbar">
+<div class="site-title">
+<strong>Programmierpraktikum Bioinformatik</strong> | Gruppe 17 | Wintersemester 2025/2026
+</div>
+
+<nav>
+<a href="index.html">Startseite</a>
+<a href="git_guide.html">Git Anleitung</a>
+<a href="faq.html">FAQ</a>
+<a href="about.html">&Uuml;ber uns</a>
+</nav>
+</div>
+
+<div class="hero">
+<h1>Datenbank</h1>
+<p>
+Diese Seite gibt einen &Uuml;berblick &uuml;ber die relationale MariaDB-Struktur unseres
+Bioinformatik-Projekts. Die Datenbank umfasst Sequenzen, Annotationen, Alignments,
+Sekund&auml;rstrukturen, Familienzuordnungen und ORF-Ergebnisse.
+</p>
+</div>
+
+</header>
+
+<main class="container">
+
+<section class="card">
+
+<h2>Kurz&uuml;bersicht</h2>
+
+<p>
+Das aktuelle Schema umfasst 12 Tabellen. Im Zentrum stehen die Tabellen
+<strong>sequence</strong>, <strong>source_entry</strong>, <strong>alignment</strong>,
+<strong>alignment_row</strong>, <strong>secondary_structure</strong> und
+<strong>sequence_secondary_structure</strong>. Erg&auml;nzt wird das Modell durch
+Organismen, Keywords, Familien sowie ein separates ORF-Modul.
+</p>
+
+<p class="note">
+Der aktuell belegte Quelldatensatz in <code>source_entry</code> besteht ausschlie&szlig;lich
+aus PDB-Eintr&auml;gen.
+</p>
+
+</section>
+
+<section class="card">
+
+<h2>Aktuelle Datenbankzahlen</h2>
+
+<div class="stats-grid">
+
+<div class="stat-box"><span class="label">Sequenzen</span><span class="value">161764</span></div>
+<div class="stat-box"><span class="label">Organismen</span><span class="value">8416</span></div>
+<div class="stat-box"><span class="label">Keywords</span><span class="value">889</span></div>
+<div class="stat-box"><span class="label">Keyword-Zuordnungen</span><span class="value">1188349</span></div>
+<div class="stat-box"><span class="label">PDB-Quelleintr&auml;ge</span><span class="value">3456</span></div>
+<div class="stat-box"><span class="label">Alignments</span><span class="value">1031</span></div>
+<div class="stat-box"><span class="label">Alignment-Zeilen</span><span class="value">3456</span></div>
+<div class="stat-box"><span class="label">Alignierte Sekund&auml;rstrukturen</span><span class="value">3453</span></div>
+<div class="stat-box"><span class="label">Sequenzbezogene Sekund&auml;rstrukturen</span><span class="value">3075</span></div>
+<div class="stat-box"><span class="label">Familien</span><span class="value">1031</span></div>
+<div class="stat-box"><span class="label">Familienmitglieder</span><span class="value">3456</span></div>
+<div class="stat-box"><span class="label">ORF-Eintr&auml;ge</span><span class="value">5397</span></div>
+
+</div>
+</section>
+
+<section class="card">
+
+<h2>Wichtige Tabellen</h2>
+
+<table class="info-table">
+<thead>
+<tr>
+<th>Tabelle</th>
+<th>Inhalt</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td><code>sequence</code></td>
+<td>Zentrale Tabelle f&uuml;r Proteinsequenzen mit Beschreibung, Sequenzl&auml;nge und Organismusbezug.</td>
+</tr>
+
+<tr>
+<td><code>source_entry</code></td>
+<td>Zuordnung externer Quellen zu Sequenzen; aktuell ist nur die Quelle <code>pdb</code> belegt.</td>
+</tr>
+
+<tr>
+<td><code>organism</code></td>
+<td>Liste der Organismen, auf die Sequenzen referenzieren k&ouml;nnen.</td>
+</tr>
+
+<tr>
+<td><code>keyword</code> / <code>sequence_keyword</code></td>
+<td>Annotation von Sequenzen &uuml;ber Keywords und deren Zuordnung.</td>
+</tr>
+
+<tr>
+<td><code>alignment</code> / <code>alignment_row</code></td>
+<td>Speicherung von Alignments und den zugeh&ouml;rigen ausgerichteten Sequenzen.</td>
+</tr>
+
+<tr>
+<td><code>secondary_structure</code></td>
+<td>Alignierte Sekund&auml;rstruktur zu einer Kombination aus Alignment und Sequenz.</td>
+</tr>
+
+<tr>
+<td><code>sequence_secondary_structure</code></td>
+<td>Sekund&auml;rstruktur auf Sequenzebene, zus&auml;tzlich mit Angabe der verwendeten Methode.</td>
+</tr>
+
+<tr>
+<td><code>family</code> / <code>family_member</code></td>
+<td>Gruppierung von Eintr&auml;gen in Familien mit quellenbezogener Referenz.</td>
+</tr>
+
+<tr>
+<td><code>orf</code></td>
+<td>Eigenes Modul zur Speicherung von ORF-Ergebnissen mit Quelle, Header, Sequenz und L&auml;nge.</td>
+</tr>
+
+</tbody>
+</table>
+
+</section>
+
+<section class="card">
+
+<h2>Beispielabfragen</h2>
+
+<pre>
+SELECT DISTINCT source FROM source_entry;
+
+SELECT source, COUNT(*)
+FROM source_entry
+GROUP BY source;
+</pre>
+
+<pre>
++--------+----------+
+| source | COUNT(*) |
++--------+----------+
+| pdb    |     3456 |
++--------+----------+
+</pre>
+
+</section>
+
+</main>
+
+<footer class="container">
+Programmierpraktikum Bioinformatik | Gruppe 17 | Wintersemester 2025/2026
+</footer>
+
+</body>
+</html>

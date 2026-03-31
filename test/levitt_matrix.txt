@@ -1,0 +1,11 @@
+# Levitt-style secondary structure substitution matrix (H=helix, E=sheet, C=coil)
+# Zum Testen der Sekundaerstruktur: Diese Datei + example.seqlib.ss hochladen, Format HTML waehlen.
+NAME Levitt_secstruc
+SCORE similarity
+NUMROW 3
+NUMCOL 3
+ROWINDEX HEC
+COLINDEX HEC
+MATRIX  2  -1  -1
+MATRIX -1   2  -1
+MATRIX -1  -1   1

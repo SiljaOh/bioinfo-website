@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Git Kurzanleitung | Programmierpraktikum Bioinformatik</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bio-green: #0d6b5c;
+  --bio-green-light: #d4ede8;
+  --bio-green-pale: #e8f6f3;
+  --bio-teal: #2a9d8f;
+  --bio-dark: #0f2926;
+  --bio-deep: #0a1f1c;
+  --text: #1a2e2a;
+  --text-muted: #4a6560;
+  --card-bg: #ffffff;
+  --border: #c5e0db;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "DM Sans", system-ui, sans-serif;
+  background: var(--bio-deep);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(13,107,92,0.06) 0%, transparent 40%),
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(42,157,143,0.15), transparent),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 32px,
+      rgba(13,107,92,0.03) 32px,
+      rgba(13,107,92,0.03) 33px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 32px,
+      rgba(13,107,92,0.03) 32px,
+      rgba(13,107,92,0.03) 33px
+    );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.header {
+  position: relative;
+  background: linear-gradient(160deg, var(--bio-deep) 0%, var(--bio-dark) 40%, var(--bio-green) 100%);
+  color: #fff;
+  padding: 40px 24px 48px;
+  text-align: center;
+  overflow: hidden;
+}
+
+.header::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: linear-gradient(to top, var(--bio-deep), transparent);
+  pointer-events: none;
+}
+
+.header-inner {
+  position: relative;
+  z-index: 1;
+}
+
+.header h1 {
+  margin: 0 0 6px 0;
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+.header h2 {
+  margin: 28px 0 0 0;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: rgba(255,255,255,0.95);
+}
+
+.main {
+  position: relative;
+  z-index: 1;
+  max-width: 920px;
+  margin: -24px auto 0;
+  padding: 0 20px 56px;
+}
+
+.main-panel {
+  background: linear-gradient(180deg, rgba(255,255,255,0.97) 0%, rgba(248,252,251,0.98) 100%);
+  border-radius: 20px;
+  padding: 36px 32px 40px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.25), 0 0 0 1px rgba(255,255,255,0.1) inset;
+  backdrop-filter: blur(8px);
+}
+
+.section {
+  margin-bottom: 40px;
+}
+
+.section:last-of-type {
+  margin-bottom: 0;
+}
+
+.section-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--bio-green);
+  margin: 0 0 18px 0;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--bio-green-light);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.section-title .icon {
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, var(--bio-green) 0%, var(--bio-teal) 100%);
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: #fff;
+  font-weight: bold;
+  box-shadow: 0 4px 12px rgba(13,107,92,0.3);
+}
+
+.desc-block {
+  background: linear-gradient(135deg, var(--bio-green-pale) 0%, var(--bio-green-light) 100%);
+  border-radius: 14px;
+  padding: 20px 24px;
+  margin-bottom: 20px;
+  font-size: 0.95rem;
+  color: var(--bio-dark);
+  line-height: 1.6;
+  border: 1px solid var(--border);
+}
+
+.page-links {
+  margin-bottom: 18px;
+}
+
+.page-links a {
+  color: var(--bio-green);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.page-links a:hover {
+  text-decoration: underline;
+}
+
+.info-block {
+  margin-bottom: 18px;
+}
+
+.info-block p {
+  margin: 0 0 14px 0;
+}
+
+.info-block a {
+  color: var(--bio-green);
+  text-decoration: none;
+  font-weight: 500;
+  word-break: break-word;
+}
+
+.info-block a:hover {
+  text-decoration: underline;
+}
+
+.code-title {
+  margin: 22px 0 12px 0;
+  color: var(--bio-dark);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+pre {
+  margin: 0;
+  padding: 18px 20px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, var(--bio-green-pale) 0%, #edf7f5 100%);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+.back-link {
+  margin-top: 22px;
+}
+
+.back-link a {
+  color: var(--bio-green);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.back-link a:hover {
+  text-decoration: underline;
+}
+
+footer {
+  position: relative;
+  z-index: 1;
+  background: linear-gradient(180deg, var(--bio-dark) 0%, var(--bio-deep) 100%);
+  color: rgba(255,255,255,0.88);
+  padding: 24px 24px;
+  font-size: 0.9rem;
+  text-align: center;
+  border-top: 1px solid rgba(13,107,92,0.4);
+}
+
+footer a {
+  color: #9ae6d9;
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <h1>Programmierpraktikum Bioinformatik</h1>
+    <h2>Gruppe 17</h2>
+  </div>
+</header>
+
+<main class="main">
+  <div class="main-panel">
+
+    <section class="section">
+      <div class="page-links">
+        <a href="index.html">Startseite</a>
+        &nbsp;|&nbsp;
+        <a href="faq.html">FAQ</a>
+        &nbsp;|&nbsp;
+        <a href="about.html"> &Uuml;ber uns</a>
+      </div>
+
+      <h2 class="section-title">
+        <span class="icon">G</span>
+        Git Kurzanleitung
+      </h2>
+
+      <div class="desc-block">
+        Ã&Uuml;ber Git werden Ã„nderungen am Code lokal entwickelt, versioniert und anschlie&szlig;end in das zentrale Repository hochgeladen, sodass alle Gruppenmitglieder darauf zugreifen k&ouml;nnen.
+      </div>
+
+      <div class="info-block">
+        <p>
+          <strong>Repository der Gruppe 17:</strong><br>
+          <a href="https://gitlab2.cip.ifi.lmu.de/grossla/progprakt-17">https://gitlab2.cip.ifi.lmu.de/grossla/progprakt-17</a>
+        </p>
+
+        <p>
+          Hinweis: In dieser Anleitung werden keine Dollarzeichen verwendet, da sie nur den Terminal Prompt anzeigen und nicht Teil der eigentlichen Git Befehle sind.
+        </p>
+      </div>
+
+      <h3 class="code-title">Wichtige Befehle</h3>
+
+<pre>
+git init            Neues Repository im aktuellen Ordner erstellen
+git clone URL       Bestehendes Repository lokal kopieren
+git pull            &Auml;nderungen vom Server holen und integrieren
+git fetch           &Auml;nderungen vom Server holen ohne Integration
+git status          Aktuellen Status anzeigen
+git add Datei       Datei f&uuml;r Commit vormerken
+git commit          Vorgemerkte &Auml;nderungen speichern
+git commit -a       Alle &Auml;nderungen direkt committen
+git push            Lokale Commits hochladen
+git diff            Unterschiede anzeigen
+git diff HEAD       Unterschiede zur letzten Version
+git checkout HEAD   Arbeitsverzeichnis zur&uuml;cksetzen
+git checkout X      Zu Branch, Commit oder Datei wechseln
+</pre>
+
+      <p class="back-link">
+        <a href="index.html">&larr; Zur&uuml;ck zur Startseite</a>
+      </p>
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  Programmierpraktikum WS 2025/2026 <span>&middot;</span> Gruppe 17
+</footer>
+
+</body>
+</html>

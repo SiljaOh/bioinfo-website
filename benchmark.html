@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>Benchmark | Programmierpraktikum Bioinformatik</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+:root {
+  --bio-green: #0d6b5c;
+  --bio-green-light: #d4ede8;
+  --bio-green-pale: #eef8f5;
+  --bio-teal: #2a9d8f;
+  --bio-dark: #0f2926;
+  --text: #1f2d2a;
+  --text-muted: #4d6661;
+  --card: #ffffff;
+  --border: #cfe4de;
+  --shadow: 0 10px 28px rgba(13, 107, 92, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "DM Sans", Arial, sans-serif;
+  background: linear-gradient(180deg, #f7fbfa 0%, #edf7f4 100%);
+  color: var(--text);
+}
+
+header {
+  background: linear-gradient(135deg, var(--bio-green) 0%, var(--bio-teal) 100%);
+  color: white;
+  padding: 2.5rem 1.5rem 2.2rem 1.5rem;
+}
+
+.header-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.site-line {
+  font-size: 0.95rem;
+  opacity: 0.92;
+  margin-bottom: 0.75rem;
+}
+
+h1 {
+  margin: 0 0 0.7rem 0;
+  font-size: 2.2rem;
+  line-height: 1.15;
+}
+
+.header-text {
+  max-width: 820px;
+  font-size: 1.02rem;
+  line-height: 1.7;
+  opacity: 0.96;
+}
+
+main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 3rem 1.25rem;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  box-shadow: var(--shadow);
+  padding: 1.4rem 1.4rem;
+  margin-bottom: 1.3rem;
+}
+
+h2 {
+  margin-top: 0;
+  color: var(--bio-green);
+  font-size: 1.35rem;
+}
+
+p {
+  line-height: 1.75;
+  margin: 0.6rem 0;
+}
+
+.chart-wrap {
+  position: relative;
+  width: 100%;
+  min-height: 420px;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0.5rem;
+}
+
+th, td {
+  padding: 0.85rem 0.9rem;
+  text-align: left;
+  border-bottom: 1px solid #e1eeea;
+}
+
+th {
+  background: var(--bio-green-pale);
+  color: var(--bio-green);
+  font-weight: 700;
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+.note {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.back-link {
+  display: inline-block;
+  margin-top: 0.4rem;
+  color: var(--bio-green);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+footer {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 1.25rem 2rem 1.25rem;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+@media (max-width: 700px) {
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  .chart-wrap {
+    min-height: 320px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="site-line">Programmierpraktikum Bioinformatik | Gruppe 17 | Wintersemester 2025/2026</div>
+    <h1>Benchmark: Dynamic Programming vs Recursion</h1>
+    <div class="header-text">
+      Diese Seite zeigt einen einfachen Laufzeitvergleich zwischen einer rekursiven
+      Implementierung und einer Dynamic Programming Implementierung des
+      Needleman Wunsch Algorithmus.
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <section class="card">
+    <h2>Einordnung</h2>
+    <p>
+      Ziel dieses Benchmarks war es, den Unterschied in der algorithmischen Effizienz
+      zwischen Rekursion und Dynamic Programming sichtbar zu machen. Beide Methoden
+      berechnen einen optimalen Alignment Score, unterscheiden sich jedoch deutlich
+      in ihrer Laufzeit.
+    </p>
+    <p>
+      Die rekursive Variante berechnet viele Teilprobleme mehrfach. Dynamic Programming
+      speichert bereits berechnete Zwischenwerte in einer Matrix und vermeidet dadurch
+      redundante Berechnungen. Mit zunehmender Sequenzl&auml;nge wird dieser Unterschied
+      immer deutlicher.
+    </p>
+  </section>
+
+  <section class="card">
+    <h2>Laufzeitdiagramm</h2>
+    <div class="chart-wrap">
+      <canvas id="benchmarkChart"></canvas>
+    </div>
+    <p class="note">
+      Gemessene Laufzeiten in Millisekunden f&uuml;r Sequenzl&auml;ngen von 3 bis 8. 
+      Rekursion zeigt exponentielle Laufzeit, Dynamic Programming skaliert polynomial.
+    </p>
+  </section>
+
+  <section class="card">
+    <h2>Messwerte</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Sequenzl&auml;nge</th>
+            <th>Recursion (ms)</th>
+            <th>Dynamic Programming (ms)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>3</td><td>3</td><td>6</td></tr>
+          <tr><td>4</td><td>5</td><td>3</td></tr>
+          <tr><td>5</td><td>27</td><td>3</td></tr>
+          <tr><td>6</td><td>156</td><td>5</td></tr>
+          <tr><td>7</td><td>821</td><td>6</td></tr>
+          <tr><td>8</td><td>4156</td><td>7</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Interpretation</h2>
+    <p>
+      Der Benchmark zeigt einen klaren Trend. Bei kurzen Sequenzen sind die Unterschiede
+      noch klein. Ab einer Sequenzl&auml;nge von 5 steigt die Laufzeit der rekursiven Methode
+      jedoch sehr stark an, w&auml;hrend Dynamic Programming nahezu stabil bleibt.
+    </p>
+    <p>
+      Besonders deutlich ist dies bei der Sequenzl&auml;nge 8. Hier ben&ouml;tigte die rekursive
+      Implementierung 4156 ms, w&auml;hrend Dynamic Programming nur 7 ms ben&ouml;tigte. Das
+      verdeutlicht, warum Dynamic Programming in der Praxis deutlich besser f&uuml;r
+      Sequenzalignment geeignet ist.
+    </p>
+
+<a class="back-link" href="index.html">&larr;  Zur&uuml;ck zur Startseite</a>
+  </section>
+
+</main>
+
+<footer>
+  Benchmark basierend auf den gemessenen Laufzeiten der Implementierungen aus dem Projekt.
+</footer>
+
+<script>
+const labels = [3, 4, 5, 6, 7, 8];
+const recursionData = [3, 5, 27, 156, 821, 4156];
+const dpData = [6, 3, 3, 5, 6, 7];
+
+const ctx = document.getElementById("benchmarkChart").getContext("2d");
+
+new Chart(ctx, {
+  type: "line",
+  data: {
+    labels: labels,
+    datasets: [
+      {
+        label: "Recursion",
+        data: recursionData,
+        borderColor: "#7b2cbf",
+        backgroundColor: "rgba(123, 44, 191, 0.08)",
+        borderWidth: 3,
+        tension: 0.25,
+        pointRadius: 4,
+        pointHoverRadius: 6,
+        fill: false
+      },
+      {
+        label: "Dynamic Programming",
+        data: dpData,
+        borderColor: "#0d6b5c",
+        backgroundColor: "rgba(13, 107, 92, 0.08)",
+        borderWidth: 3,
+        tension: 0.25,
+        pointRadius: 4,
+        pointHoverRadius: 6,
+        fill: false
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: "top"
+      },
+      title: {
+        display: true,
+        text: "Runtime Comparison"
+      }
+    },
+    scales: {
+      x: {
+        title: {
+          display: true,
+          text: "Sequence length"
+        },
+        grid: {
+          color: "rgba(0, 0, 0, 0.05)"
+        }
+      },
+      y: {
+        title: {
+          display: true,
+          text: "Runtime (ms)"
+        },
+        beginAtZero: true,
+        grid: {
+          color: "rgba(0, 0, 0, 0.05)"
+        }
+      }
+    }
+  }
+});
+</script>
+
+</body>
+</html>

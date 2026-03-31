@@ -1,0 +1,1009 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>ProgPrakt WS 2025/2026 - Gruppe 17</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --green: #059669;
+      --green-light: #10b981;
+      --green-pale: #d1fae5;
+      --green-bg: #ecfdf5;
+      --teal: #0d9488;
+      --teal-light: #2dd4bf;
+      --radius: 16px;
+      --radius-lg: 24px;
+      --nav-h: 64px;
+      --content-max: 1160px;
+    }
+
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-14px) rotate(4deg); }
+    }
+    @keyframes float2 {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(10px) scale(1.08); }
+    }
+    @keyframes float3 {
+      0%, 100% { transform: translateY(0) translateX(0); }
+      33% { transform: translateY(-8px) translateX(5px); }
+      66% { transform: translateY(5px) translateX(-5px); }
+    }
+    @keyframes pulse-glow {
+      0%, 100% { opacity: 0.5; filter: blur(50px); transform: scale(1); }
+      50% { opacity: 0.8; filter: blur(60px); transform: scale(1.1); }
+    }
+    @keyframes slideInLeft {
+      from { opacity: 0; transform: translateX(-60px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes slideInRight {
+      from { opacity: 0; transform: translateX(60px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes borderGlow {
+      0%, 100% { box-shadow: 0 0 24px rgba(16, 185, 129, 0.25); }
+      50% { box-shadow: 0 0 36px rgba(45, 212, 191, 0.4); }
+    }
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+    @keyframes bounce-soft {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    @keyframes wiggle {
+      0%, 100% { transform: rotate(-2deg); }
+      50% { transform: rotate(2deg); }
+    }
+    @keyframes scalePulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    @keyframes borderRotate {
+      0% { border-color: rgba(16, 185, 129, 0.4); }
+      50% { border-color: rgba(45, 212, 191, 0.6); }
+      100% { border-color: rgba(16, 185, 129, 0.4); }
+    }
+    @keyframes navLinkPop {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+    }
+    @keyframes cardReveal {
+      from { opacity: 0; transform: translateY(20px) scale(0.96); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    @keyframes numberPulse {
+      0%, 100% { box-shadow: 0 4px 16px rgba(16, 185, 129, 0.35); }
+      50% { box-shadow: 0 6px 24px rgba(16, 185, 129, 0.5); }
+    }
+    @keyframes iconSpin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    @keyframes breathe {
+      0%, 100% { opacity: 0.7; }
+      50% { opacity: 1; }
+    }
+    @keyframes sloganReveal {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes bamExplosion {
+      0% { opacity: 0; transform: scale(0.2); filter: blur(8px); }
+      25% { opacity: 1; transform: scale(1.5); filter: blur(0) brightness(1.4); }
+      40% { transform: scale(1.25); filter: blur(0) brightness(1.2); }
+      60% { transform: scale(1.08); }
+      100% { opacity: 1; transform: scale(1); filter: blur(0) brightness(1); }
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    html, body { margin: 0; padding: 0; width: 100%; overflow-x: hidden; }
+
+    body {
+      font-family: "Outfit", system-ui, sans-serif;
+      background: linear-gradient(135deg, #ffffff 0%, var(--green-bg) 40%, #f0fdf4 70%, #ffffff 100%);
+      background-size: 400% 400%;
+      animation: gradientShift 20s ease infinite;
+      color: #134e4a;
+      line-height: 1.6;
+      min-height: 100vh;
+      padding-top: var(--nav-h);
+    }
+
+    /* ---- Nav: glassmorphism light ---- */
+    .site-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      height: var(--nav-h);
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(16, 185, 129, 0.2);
+      box-shadow: 0 4px 24px rgba(16, 185, 129, 0.08);
+    }
+    .site-nav-inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
+    .site-nav-brand {
+      font-weight: 800;
+      font-size: 1.2rem;
+      background: linear-gradient(135deg, var(--green), var(--teal-light));
+      background-size: 200% 200%;
+      animation: gradientMove 4s ease infinite;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+    .site-nav-brand:hover { opacity: 0.9; text-decoration: none; }
+    .site-nav-links { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem 0.75rem; }
+    .site-nav-links a {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #047857;
+      text-decoration: none;
+      padding: 0.45rem 0.85rem;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+    }
+    .site-nav-links a:hover {
+      color: var(--green);
+      background: var(--green-pale);
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
+      animation: navLinkPop 0.4s ease;
+    }
+
+    /* ---- Hero: large, gradient, floating icons ---- */
+    .hero {
+      position: relative;
+      min-height: 42vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 1.5rem 4rem;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(209, 250, 229, 0.6) 0%, rgba(236, 253, 245, 0.95) 25%, rgba(255, 255, 255, 0.9) 50%, rgba(236, 253, 245, 0.95) 75%, rgba(209, 250, 229, 0.6) 100%),
+        linear-gradient(90deg, rgba(167, 243, 208, 0.4) 0%, rgba(236, 253, 245, 0.85) 30%, rgba(240, 253, 244, 0.9) 70%, rgba(167, 243, 208, 0.4) 100%);
+      pointer-events: none;
+      animation: breathe 8s ease-in-out infinite;
+    }
+    .hero-blur {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0; left: 0;
+      background: linear-gradient(135deg, transparent 0%, rgba(16, 185, 129, 0.08) 50%, transparent 100%);
+      filter: blur(60px);
+      opacity: 0.8;
+      pointer-events: none;
+    }
+    .hero-blur-2 {
+      display: none;
+    }
+    .hero-row {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem 3rem;
+      flex-wrap: wrap;
+      width: 100%;
+      max-width: 920px;
+    }
+    .hero-left,
+    .hero-right {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+      flex: 0 0 80px;
+      min-width: 80px;
+    }
+    .hero-avatar {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid rgba(255,255,255,0.9);
+      box-shadow: 0 4px 20px rgba(16, 185, 129, 0.3);
+      animation: float 4s ease-in-out infinite;
+    }
+    .hero-left .hero-avatar:nth-of-type(1) { animation-delay: 0s; }
+    .hero-left .hero-avatar:nth-of-type(2) { animation-delay: 1.2s; animation-name: float2; }
+    .hero-right .hero-avatar:nth-of-type(1) { animation-delay: 0.4s; animation-name: float2; }
+    .hero-right .hero-avatar:nth-of-type(2) { animation-delay: 1.6s; }
+    .hero-emoji {
+      font-size: 1.75rem;
+      line-height: 1;
+      animation: float3 3.5s ease-in-out infinite;
+    }
+    .hero-left .hero-emoji { animation-delay: 0.5s; }
+    .hero-right .hero-emoji { animation-delay: 1s; }
+    .hero-inner {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      flex: 1 1 auto;
+      min-width: 0;
+      max-width: 480px;
+      margin: 0 0.5rem;
+    }
+    .hero-slogan {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.35rem 0;
+      margin: 0 0 0.5rem 0;
+    }
+    .hero-slogan .slogan-line {
+      display: block;
+      font-size: clamp(1.35rem, 3.2vw, 2.1rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #065f46 0%, var(--green-light) 50%, #047857 100%);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      opacity: 0;
+      animation: sloganReveal 0.6s ease-out forwards;
+    }
+    .hero-slogan .slogan-1 { animation-delay: 0.2s; }
+    .hero-slogan .slogan-bam {
+      animation: bamExplosion 0.7s ease-out 1.1s forwards;
+      opacity: 0;
+      font-size: clamp(1.7rem, 4.2vw, 2.6rem);
+      position: relative;
+    }
+    .hero-slogan .slogan-bam::after {
+      content: "";
+      position: absolute;
+      inset: -8px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(16, 185, 129, 0.35) 0%, transparent 70%);
+      animation: bamBurst 0.7s ease-out 1.1s forwards;
+      opacity: 0;
+      z-index: -1;
+    }
+    @keyframes bamBurst {
+      0% { opacity: 0.8; transform: scale(0.3); }
+      100% { opacity: 0; transform: scale(2); }
+    }
+    .hero-slogan .slogan-2 { animation-delay: 1.9s; }
+    /* Slogan (Bioinformatic Tools) erscheint zuletzt via .hero-sub */
+    .hero .hero-sub {
+      margin: 0;
+      font-size: 1.15rem;
+      font-weight: 500;
+      color: #047857;
+      opacity: 0;
+      animation: sloganReveal 0.5s ease-out 2.6s forwards;
+    }
+
+    /* ---- Main content: glass panels ---- */
+    .main {
+      position: relative;
+      z-index: 5;
+      max-width: var(--content-max);
+      margin: -2rem auto 0;
+      padding: 0 1.25rem 3rem;
+    }
+    .main-panel {
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem 2rem 3rem;
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      box-shadow: 0 25px 50px -12px rgba(16, 185, 129, 0.1);
+    }
+
+    /* ---- Intro: team + group photo (slide-in), one row ---- */
+    .intro {
+      background: linear-gradient(135deg, var(--green-pale) 0%, rgba(255,255,255,0.9) 50%, var(--green-bg) 100%);
+      border-radius: var(--radius-lg);
+      padding: 2rem 2rem 2.5rem;
+      margin-bottom: 2.5rem;
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      animation: borderGlow 6s ease-in-out infinite, borderRotate 4s ease-in-out infinite;
+    }
+    .team-grid {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.5rem 2rem;
+      margin: 0 0 2rem 0;
+    }
+    .team-card {
+      flex: 0 0 220px;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+      animation: cardReveal 0.6s ease-out both;
+    }
+    .team-card:nth-child(1) { animation-delay: 0.1s; }
+    .team-card:nth-child(3) { animation-delay: 0.25s; }
+    .team-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(16, 185, 129, 0.2);
+    }
+    .team-card h4 {
+      margin: 0 0 1rem 0;
+      color: #065f46;
+      font-size: 1rem;
+      font-weight: 700;
+      text-align: center;
+    }
+    .team-members { display: flex; flex-direction: column; gap: 0.75rem; }
+    .member { display: flex; align-items: center; gap: 0.75rem; }
+    .member img {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--green-light);
+      box-shadow: 0 0 16px rgba(16, 185, 129, 0.25);
+      transition: transform 0.3s ease;
+    }
+    .member:hover img { animation: scalePulse 0.6s ease; }
+    .member-info strong { color: #134e4a; font-size: 0.95rem; }
+    .group-photo-wrap {
+      flex: 0 0 auto;
+      width: 480px;
+      height: 200px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: none;
+      box-shadow: none;
+      animation: slideInLeft 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.35s both;
+      transition: transform 0.3s ease;
+    }
+    .group-photo-wrap:hover {
+      transform: scale(1.02);
+    }
+    .body-group-photo {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+    .intro-nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.5rem 1rem;
+      margin-bottom: 2rem;
+    }
+    .intro-nav a {
+      color: var(--green);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 0.4rem 0.9rem;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.8);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      transition: all 0.3s ease;
+    }
+    .intro-nav a:hover {
+      background: var(--green-pale);
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.25);
+      transform: scale(1.05);
+    }
+    .intro-nav span { color: rgba(5, 150, 105, 0.4); user-select: none; }
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1.25rem;
+      margin: 0 0 1.5rem 0;
+    }
+    .overview-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      text-align: center;
+      min-height: 170px;
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      border-radius: var(--radius);
+      padding: 1.5rem 1.25rem;
+      text-decoration: none;
+      color: #134e4a;
+      transition: all 0.35s ease;
+      position: relative;
+      overflow: hidden;
+      animation: cardReveal 0.5s ease-out both;
+    }
+    .overview-card:nth-child(1) { animation-delay: 0.05s; }
+    .overview-card:nth-child(2) { animation-delay: 0.15s; }
+    .overview-card:nth-child(3) { animation-delay: 0.25s; }
+    .overview-card:nth-child(4) { animation-delay: 0.35s; }
+    .overview-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--green), var(--teal-light));
+      background-size: 200% 100%;
+      animation: shimmer 2.5s linear infinite;
+    }
+    .overview-card:hover {
+      transform: translateY(-18px) scale(1.03);
+      border-color: var(--green-light);
+      box-shadow: 0 24px 48px rgba(16, 185, 129, 0.28);
+    }
+    .overview-number {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--green), var(--teal-light));
+      color: #fff;
+      font-weight: 800;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.75rem;
+      animation: numberPulse 2s ease-in-out infinite;
+    }
+    .overview-card h3 {
+      margin: 0 0 0.5rem 0;
+      color: #065f46;
+      font-size: 1rem;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+    .overview-lines { margin: 0; padding: 0; text-align: center; color: #047857; font-size: 0.82rem; line-height: 1.5; }
+    .overview-lines span { display: block; margin: 0.15rem 0; }
+    .intro-meta { text-align: center; font-size: 0.9rem; color: #047857; margin: 0; }
+
+    /* ---- Sections ---- */
+    .section {
+      margin-bottom: 2.5rem;
+      animation: fadeInUp 0.6s ease-out both;
+    }
+    .section:nth-of-type(2) { animation-delay: 0.05s; }
+    .section:nth-of-type(3) { animation-delay: 0.1s; }
+    .section:nth-of-type(4) { animation-delay: 0.15s; }
+    .section:last-of-type { margin-bottom: 0; }
+    .section-title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #065f46;
+      margin: 0 0 1.25rem 0;
+      padding: 0.6rem 0 0.6rem 1rem;
+      border-left: 4px solid var(--green-light);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: linear-gradient(90deg, var(--green-pale) 0%, transparent 100%);
+      border-radius: 0 12px 12px 0;
+      animation: borderRotate 3s ease-in-out infinite;
+    }
+    .section-title .icon {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, var(--green), var(--teal-light));
+      border-radius: 10px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.95rem;
+      color: #fff;
+      font-weight: 800;
+      box-shadow: 0 4px 20px rgba(16, 185, 129, 0.4);
+      animation: scalePulse 2s ease-in-out infinite;
+    }
+    .section-title .emoji { font-size: 1.4rem; line-height: 1; animation: bounce-soft 2s ease-in-out infinite; }
+    .desc-block {
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1.25rem;
+      font-size: 0.95rem;
+      color: #134e4a;
+      line-height: 1.6;
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.25rem;
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      border-radius: var(--radius);
+      padding: 1.35rem 1.35rem;
+      transition: all 0.35s ease;
+      position: relative;
+      overflow: hidden;
+      animation: cardReveal 0.5s ease-out both;
+    }
+    .card:nth-child(1) { animation-delay: 0.1s; }
+    .card:nth-child(2) { animation-delay: 0.15s; }
+    .card:nth-child(3) { animation-delay: 0.2s; }
+    .card:nth-child(4) { animation-delay: 0.25s; }
+    .card:nth-child(5) { animation-delay: 0.3s; }
+    .card::after {
+      content: "";
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.08), transparent);
+      transition: left 0.5s ease;
+    }
+    .card:hover {
+      border-color: var(--green-light);
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(16, 185, 129, 0.18);
+    }
+    .card:hover::after { left: 100%; }
+    .card a {
+      color: var(--green);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.02rem;
+    }
+    .card a:hover { text-decoration: underline; }
+    .card small {
+      display: block;
+      color: #047857;
+      font-size: 0.85rem;
+      margin-top: 0.4rem;
+      line-height: 1.45;
+    }
+    .tool-groups {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem 1.75rem;
+    }
+    .tool-group h4,
+    .tool-doc h4 {
+      margin: 0 0 0.75rem 0;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #065f46;
+    }
+    .tool-group .link-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .link-list li { margin: 0; }
+    .link-list a {
+      color: var(--green);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.92rem;
+      transition: all 0.25s ease;
+    }
+    .link-list a:hover { color: var(--green-light); text-decoration: underline; transform: translateX(4px); }
+    .link-list span {
+      display: block;
+      color: #047857;
+      font-size: 0.82rem;
+      line-height: 1.4;
+      margin-top: 0.1rem;
+    }
+    .tool-doc {
+      grid-column: 1 / -1;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(16, 185, 129, 0.2);
+    }
+    .tool-doc p { margin: 0; }
+    .tool-doc a {
+      color: var(--green);
+      text-decoration: none;
+      font-size: 0.92rem;
+      font-weight: 600;
+    }
+    .tool-doc a:hover { text-decoration: underline; }
+
+    /* ---- Footer: light green ---- */
+    .footer {
+      background: linear-gradient(180deg, #065f46 0%, #047857 100%);
+      color: rgba(255, 255, 255, 0.9);
+      padding: 2rem 1.5rem;
+      font-size: 0.9rem;
+      text-align: center;
+      border-top: 2px solid rgba(16, 185, 129, 0.3);
+    }
+    .footer-brand { display: block; margin-bottom: 1rem; font-weight: 700; color: #fff; }
+    .footer-nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.4rem 1rem; }
+    .footer-nav a {
+      color: #d1fae5;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.25s ease;
+    }
+    .footer-nav a:hover { color: #fff; text-decoration: underline; transform: scale(1.05); }
+    .footer-divider { color: rgba(255,255,255,0.5); margin: 0 0.2rem; user-select: none; }
+
+    @media (max-width: 1100px) {
+      .overview-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 768px) {
+      .site-nav-inner { flex-wrap: wrap; justify-content: center; padding: 0.5rem 1rem; }
+      .site-nav { height: auto; min-height: var(--nav-h); }
+      body { padding-top: 5.5rem; }
+      .site-nav .site-nav-brand { width: 100%; text-align: center; }
+      .hero { min-height: 35vh; padding: 2rem 1rem 3rem; }
+      .hero-row { flex-direction: column; gap: 1rem; }
+      .hero-left, .hero-right { order: 0; }
+      .hero-inner { order: 1; }
+      .hero-avatar { width: 48px; height: 48px; }
+      .hero-emoji { font-size: 1.5rem; }
+      .team-grid { flex-direction: column; align-items: center; }
+      .group-photo-wrap { order: -1; width: 100%; max-width: 480px; height: 200px; }
+      .overview-grid { grid-template-columns: 1fr; }
+      .overview-card { min-height: auto; }
+      .main-panel { padding: 1.5rem 1.25rem; }
+      .footer-nav { flex-direction: column; gap: 0.5rem; }
+      .footer-divider { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="site-nav" aria-label="Hauptnavigation">
+  <div class="site-nav-inner">
+    <a href="index.html" class="site-nav-brand">Bioinformatic Tools</a>
+    <div class="site-nav-links">
+      <a href="index.html#alignment">Alignment</a>
+      <a href="index.html#gor">GOR</a>
+      <a href="index.html#tools">Tools</a>
+      <a href="database.html">Datenbank</a>
+      <a href="git_guide.html">Git</a>
+      <a href="faq.html">FAQ</a>
+      <a href="about.html">&Uuml;ber uns</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-blur"></div>
+  <div class="hero-blur hero-blur-2"></div>
+  <div class="hero-row">
+    <div class="hero-left" aria-hidden="true">
+      <img src="img/zeno.jpg" class="hero-avatar" alt="">
+      <span class="hero-emoji">&#129516;</span>
+      <img src="img/silja.jpg" class="hero-avatar" alt="">
+    </div>
+    <div class="hero-inner">
+      <div class="hero-slogan">
+        <span class="slogan-line slogan-1">Vier Coder. Ein Arzt. Teamwork.</span>
+        <span class="slogan-line slogan-bam">BAM</span>
+        <span class="slogan-line slogan-2">bioinformatics</span>
+      </div>
+      <p class="hero-sub">Bioinformatic Tools</p>
+    </div>
+    <div class="hero-right" aria-hidden="true">
+      <img src="img/lara.jpg" class="hero-avatar" alt="">
+      <span class="hero-emoji">&#128300;</span>
+      <img src="img/anna.jpg" class="hero-avatar" alt="">
+    </div>
+  </div>
+</header>
+
+<main class="main">
+  <div class="main-panel">
+
+    <section class="intro">
+      <div class="team-grid">
+        <div class="team-card">
+          <h4>Alignment Coder</h4>
+          <div class="team-members">
+            <div class="member">
+              <img src="img/zeno.jpg" alt="Zeno Fiocco">
+              <div class="member-info"><strong>Zeno Fiocco</strong></div>
+            </div>
+            <div class="member">
+              <img src="img/silja.jpg" alt="Silja Ohlsen">
+              <div class="member-info"><strong>Silja Ohlsen</strong></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="group-photo-wrap">
+          <img src="cgi-bin/gruppenbild.PNG" class="body-group-photo" alt="Gruppenbild">
+        </div>
+
+        <div class="team-card">
+          <h4>GOR Coder</h4>
+          <div class="team-members">
+            <div class="member">
+              <img src="img/lara.jpg" alt="Lara Gross">
+              <div class="member-info"><strong>Lara Gro&szlig;</strong></div>
+            </div>
+            <div class="member">
+              <img src="img/anna.jpg" alt="Anna Niederlechner">
+              <div class="member-info"><strong>Anna Niederlechner</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <nav class="intro-nav" aria-label="Schnellzugriff">
+        <a href="git_guide.html">Git Anleitung</a>
+        <span>|</span>
+        <a href="faq.html">FAQ</a>
+        <span>|</span>
+        <a href="about.html">&Uuml;ber uns</a>
+      </nav>
+
+      <div class="overview-grid">
+        <a href="#alignment" class="overview-card">
+          <span class="overview-number">1</span>
+          <h3>Sequence Alignment</h3>
+          <div class="overview-lines">
+            <span>Alignment-Algorithmen</span>
+            <span>Validierung</span>
+            <span>Benchmark-Ergebnisse</span>
+          </div>
+        </a>
+        <a href="#gor" class="overview-card">
+          <span class="overview-number">2</span>
+          <h3>Protein Secondary Structure Prediction</h3>
+          <div class="overview-lines">
+            <span>GOR-Modelle</span>
+            <span>Sekund&auml;rstruktur-Vorhersage</span>
+            <span>Performance-Analyse</span>
+          </div>
+        </a>
+        <a href="#tools" class="overview-card">
+          <span class="overview-number">3</span>
+          <h3>Additional Bioinformatics Tools</h3>
+          <div class="overview-lines">
+            <span>Werkzeuge f&uuml;r Sequenz-</span>
+            <span>Struktur- und</span>
+            <span>Datenbankanalyse</span>
+          </div>
+        </a>
+        <a href="database.html" class="overview-card">
+          <span class="overview-number">4</span>
+          <h3>Datenbank</h3>
+          <div class="overview-lines">
+            <span>Sequenzen und Annotationen</span>
+            <span>Alignments und Strukturdaten</span>
+            <span>SQL-Abfragen in MariaDB</span>
+          </div>
+        </a>
+      </div>
+
+      <p class="intro-meta"><strong>Betreuung:</strong> Prof. Dr. Volker Heun, Felix Offensperger, Armin Hadziahmetovic</p>
+    </section>
+
+    <section class="section" id="alignment">
+      <h2 class="section-title">
+        <span class="icon">1</span>
+        <span class="emoji" aria-hidden="true">&#129516;</span>
+        Sequence Alignment
+      </h2>
+      <div class="desc-block">
+        Implementierung klassischer Alignment-Algorithmen sowie Benchmark- und Validierungsanalysen.
+      </div>
+      <div class="card-grid">
+        <div class="card">
+          <a href="alignment.html">Sequence Alignment</a>
+          <small>Ausf&uuml;hren verschiedener Alignment-Algorithmen mit frei w&auml;hlbaren Parametern.</small>
+        </div>
+        <div class="card">
+          <a href="validation.html">Alignment Validation</a>
+          <small>Vergleich der berechneten Alignments mit Referenz-Alignments.</small>
+        </div>
+        <div class="card">
+          <a href="correlations.html">HOMSTRAD Correlations Benchmark</a>
+          <small>Korrelationsanalyse der HOMSTRAD-Benchmark-Ergebnisse.</small>
+        </div>
+        <div class="card">
+          <a href="benchmark.html">Algorithm Benchmark</a>
+          <small>Laufzeitvergleich zwischen Rekursion und Dynamic Programming.</small>
+        </div>
+        <div class="card">
+          <a href="tuning.html">Parameter Tuning</a>
+          <small>Optimierung der Alignment-Parameter.</small>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="gor">
+      <h2 class="section-title">
+        <span class="icon">2</span>
+        <span class="emoji" aria-hidden="true">&#129514;</span>
+        Protein Secondary Structure Prediction
+      </h2>
+      <div class="desc-block">
+        Vorhersage der Proteinsekund&auml;rstruktur mit implementierten GOR-Algorithmen (Garnier-Osguthorpe-Robson) und Evaluierung der Modellperformance.
+      </div>
+      <div class="card-grid">
+        <div class="card">
+          <a href="cgi-bin/run_train.py">Train GOR Model</a>
+          <small>GOR-Modell auf eigenen Daten trainieren.</small>
+        </div>
+        <div class="card">
+          <a href="cgi-bin/run_predict.py">Secondary Structure Prediction</a>
+          <small>Vorhersage der Sekund&auml;rstruktur mit den implementierten GOR-Methoden.</small>
+        </div>
+        <div class="card">
+          <a href="cgi-bin/run_predictGor5.py">Secondary Structure Prediction (GOR5)</a>
+          <small>Vorhersage mit GOR5 auf Basis multipler Sequenzalignments (MSA).</small>
+        </div>
+        <div class="card">
+          <a href="cgi-bin/run_validateGor.py">Validation &amp; Performance</a>
+          <small>Analyse der Modelle und &Uuml;bersicht der Ergebnisse.</small>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="tools">
+      <h2 class="section-title">
+        <span class="icon">3</span>
+        <span class="emoji" aria-hidden="true">&#128295;</span>
+        Additional Bioinformatics Tools
+      </h2>
+      <div class="desc-block">
+        Kleinere Werkzeuge zur Analyse von Sequenzen, Strukturen und Datenbanken.
+      </div>
+      <div class="tool-groups">
+        <div class="tool-group">
+          <h4>Sequence Analysis</h4>
+          <ul class="link-list">
+            <li>
+              <a href="cgi-bin/aufageb10_web.py">genome2aa</a>
+              <span>DNA to Protein Translation</span>
+            </li>
+            <li>
+              <a href="cgi-bin/encode_cgi.cgi">encode</a>
+              <span>Sequenzkodierung</span>
+            </li>
+            <li>
+              <a href="cgi-bin/cgi_incidence.py">incidence</a>
+              <span>H&auml;ufigkeitsanalyse</span>
+            </li>
+            <li>
+              <a href="cgi-bin/unique_web.py">unique</a>
+              <span>Identifikation einzigartiger Sequenzen</span>
+            </li>
+          </ul>
+        </div>
+        <div class="tool-group">
+          <h4>Database &amp; Retrieval</h4>
+          <ul class="link-list">
+            <li>
+              <a href="get_seq.html">get_seq</a>
+              <span>Sequenzabruf aus Datenbanken</span>
+            </li>
+            <li>
+              <a href="cgi-bin/acsearch.py">acsearch</a>
+              <span>Suche nach Accession Nummern</span>
+            </li>
+            <li>
+              <a href="spkeyword.html">spkeyword</a>
+              <span>SwissProt Keyword Search</span>
+            </li>
+            <li>
+              <a href="spkeyword_sql.html">spkeyword_sql</a>
+              <span>SQL-basierte Keyword Suche</span>
+            </li>
+          </ul>
+        </div>
+        <div class="tool-group">
+          <h4>Structure Analysis</h4>
+          <ul class="link-list">
+            <li>
+              <a href="makescc.html">makescc</a>
+              <span>Kontaktmatrix aus PDB</span>
+            </li>
+            <li>
+              <a href="cgi-bin/homstrad.cgi">homstrad</a>
+              <span>Struktur-basierte Alignment Analyse</span>
+            </li>
+            <li>
+              <a href="cgi-bin/psscan_cgi.cgi">psscan</a>
+              <span>PROSITE Pattern Search</span>
+            </li>
+          </ul>
+        </div>
+        <div class="tool-group">
+          <h4>Genome Analysis</h4>
+          <ul class="link-list">
+            <li>
+              <a href="cgi-bin/cgi_genome_length.py">genome_length</a>
+              <span>GC-Content Analysis</span>
+            </li>
+            <li>
+              <a href="cgi-bin/cgi_get_crispr.py">get_crispr</a>
+              <span>CRISPR Regionen Analyse</span>
+            </li>
+          </ul>
+        </div>
+        <div class="tool-doc">
+          <h4>Project Documentation</h4>
+          <p>
+            <a href="git_guide.txt">Git Anleitung</a><br>
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer class="footer">
+  <span class="footer-brand">Programmierpraktikum WS 2025/2026 &middot; Gruppe 17</span>
+  <nav class="footer-nav" aria-label="Seitennavigation">
+    <a href="index.html">Start</a>
+    <span class="footer-divider">|</span>
+    <a href="alignment.html">Alignment</a>
+    <span class="footer-divider">|</span>
+    <a href="validation.html">Validation</a>
+    <span class="footer-divider">|</span>
+    <a href="correlations.html">HOMSTRAD Benchmark</a>
+    <span class="footer-divider">|</span>
+    <a href="tuning.html">Tuning</a>
+    <span class="footer-divider">|</span>
+    <a href="benchmark.html">Algorithm Benchmark</a>
+    <span class="footer-divider">|</span>
+    <a href="database.html">Datenbank</a>
+    <span class="footer-divider">|</span>
+    <a href="index.html#tools">Tools</a>
+    <span class="footer-divider">&middot;</span>
+    <a href="git_guide.html">Git</a>
+    <span class="footer-divider">|</span>
+    <a href="faq.html">FAQ</a>
+    <span class="footer-divider">|</span>
+    <a href="about.html">&Uuml;ber uns</a>
+  </nav>
+</footer>
+
+</body>
+</html>

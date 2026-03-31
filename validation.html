@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Validation | Bioinformatik PP</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --green: #059669;
+      --green-light: #10b981;
+      --green-pale: #d1fae5;
+      --green-bg: #ecfdf5;
+      --teal: #0d9488;
+      --teal-light: #2dd4bf;
+      --radius: 16px;
+      --radius-lg: 24px;
+      --nav-h: 64px;
+      --content-max: 1160px;
+      --accent: #059669;
+      --accent-hover: #047857;
+      --accent-light: #d1fae5;
+      --text: #134e4a;
+      --text-muted: #0f766e;
+      --border: rgba(16, 185, 129, 0.35);
+      --surface: #fff;
+      --bg: #ecfdf5;
+      --radius-sm: 8px;
+      --shadow: 0 2px 12px rgba(5, 150, 105, 0.1);
+      --font: "Outfit", system-ui, sans-serif;
+    }
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    @keyframes navLinkPop {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    html, body { margin: 0; padding: 0; width: 100%; overflow-x: hidden; }
+    body {
+      font-family: var(--font);
+      font-size: 1rem;
+      line-height: 1.55;
+      color: var(--text);
+      background: linear-gradient(135deg, #ffffff 0%, var(--green-bg) 40%, #f0fdf4 70%, #ffffff 100%);
+      background-size: 400% 400%;
+      animation: gradientShift 20s ease infinite;
+      min-height: 100vh;
+      padding-top: var(--nav-h);
+    }
+    .site-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      height: var(--nav-h);
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(16, 185, 129, 0.2);
+      box-shadow: 0 4px 24px rgba(16, 185, 129, 0.08);
+    }
+    .site-nav-inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
+    .site-nav-brand {
+      font-weight: 800;
+      font-size: 1.2rem;
+      background: linear-gradient(135deg, var(--green), var(--teal-light));
+      background-size: 200% 200%;
+      animation: gradientMove 4s ease infinite;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+    .site-nav-brand:hover { opacity: 0.9; text-decoration: none; }
+    .site-nav-links { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem 0.75rem; }
+    .site-nav-links a {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #047857;
+      text-decoration: none;
+      padding: 0.45rem 0.85rem;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+    }
+    .site-nav-links a:hover {
+      color: var(--green);
+      background: var(--green-pale);
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
+      animation: navLinkPop 0.4s ease;
+    }
+    .main {
+      position: relative;
+      z-index: 5;
+      max-width: var(--content-max);
+      margin: -2rem auto 0;
+      padding: 0 1.25rem 3rem;
+    }
+    .main-panel {
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem 2rem 3rem;
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      box-shadow: 0 25px 50px -12px rgba(16, 185, 129, 0.1);
+    }
+    .container { max-width: 880px; margin: 0 auto; padding: 0 1.25rem; }
+    .footer {
+      background: linear-gradient(180deg, #065f46 0%, #047857 100%);
+      color: rgba(255, 255, 255, 0.9);
+      padding: 2rem 1.5rem;
+      font-size: 0.9rem;
+      text-align: center;
+      border-top: 2px solid rgba(16, 185, 129, 0.3);
+    }
+    .footer-brand { display: block; margin-bottom: 1rem; font-weight: 700; color: #fff; }
+    .footer-nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.4rem 1rem; }
+    .footer-nav a {
+      color: #d1fae5;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.25s ease;
+    }
+    .footer-nav a:hover { color: #fff; text-decoration: underline; }
+    .footer-divider { color: rgba(255,255,255,0.5); margin: 0 0.2rem; user-select: none; }
+    @media (max-width: 768px) {
+      .site-nav-inner { flex-wrap: wrap; justify-content: center; padding: 0.5rem 1rem; }
+      .site-nav { height: auto; min-height: var(--nav-h); }
+      body { padding-top: 5.5rem; }
+    }
+    main { padding: 0.75rem 0 1.5rem; }
+    .page-head { margin-bottom: 0.5rem; }
+    .page-head h1 { font-size: 1.35rem; margin: 0 0 0.2rem; font-weight: 700; color: var(--text); }
+    .page-head p { margin: 0; color: var(--text-muted); font-size: 0.85rem; }
+    .panel {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 1rem 1.15rem;
+      margin-bottom: 1rem;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+    .panel h2 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin: 0 0 0.5rem;
+      padding-bottom: 0.35rem;
+      border-bottom: 2px solid var(--accent-light);
+      color: var(--accent);
+    }
+    .field-group { margin-bottom: 0; }
+    .field-title { font-weight: 600; font-size: 0.8rem; margin-bottom: 0.3rem; color: var(--text); }
+    .field-title em { font-weight: 400; color: var(--text-muted); font-size: 0.85em; }
+
+    .source-picker { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+    .source-toggle {
+      display: inline-flex;
+      background: var(--bg);
+      border-radius: 999px;
+      padding: 3px;
+      border: 1px solid var(--border);
+      box-shadow: inset 0 1px 2px rgba(0,0,0,0.04);
+    }
+    .source-toggle .seg {
+      padding: 0.25rem 0.6rem;
+      border: none;
+      border-radius: 999px;
+      font-family: inherit;
+      font-size: 0.75rem;
+      font-weight: 500;
+      cursor: pointer;
+      background: transparent;
+      color: var(--text-muted);
+      transition: color 0.15s, background 0.15s;
+    }
+    .source-toggle .seg:hover { color: var(--text); }
+    .source-toggle .seg.active {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 1px 4px rgba(13,107,92,0.35);
+    }
+    .source-input { display: none; flex: 1; min-width: 180px; align-items: center; }
+    .source-input.active { display: flex; }
+    .source-input input[type="file"] {
+      padding: 0.45rem 0.65rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-family: inherit;
+      font-size: 0.9rem;
+      background: var(--surface);
+      width: 100%;
+      max-width: 280px;
+    }
+    .source-input input[type="file"]::file-selector-button {
+      margin-right: 0.5rem;
+      padding: 0.3rem 0.6rem;
+      border: none;
+      border-radius: 6px;
+      background: var(--accent-light);
+      color: var(--accent);
+      font-weight: 500;
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+    .source-input select {
+      padding: 0.45rem 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-family: inherit;
+      font-size: 0.9rem;
+      background: var(--surface);
+      min-width: 200px;
+      color: var(--text);
+    }
+
+    .form-actions { margin-top: 0.6rem; }
+    .btn {
+      display: inline-block;
+      padding: 0.45rem 1rem;
+      font-family: inherit;
+      font-weight: 600;
+      border: none;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.88rem;
+      box-shadow: 0 2px 8px rgba(13,107,92,0.25);
+      transition: background 0.2s, transform 0.1s;
+    }
+    .btn:hover { background: var(--accent-hover); }
+    .btn:active { transform: scale(0.98); }
+    .page-head a { color: var(--accent); text-decoration: none; font-weight: 500; }
+    .page-head a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+<nav class="site-nav" aria-label="Hauptnavigation">
+  <div class="site-nav-inner">
+    <a href="index.html" class="site-nav-brand">Bioinformatic Tools</a>
+    <div class="site-nav-links">
+      <a href="alignment.html">Alignment</a>
+      <a href="validation.html">Validation</a>
+      <a href="correlations.html">HOMSTRAD Benchmark</a>
+      <a href="tuning.html">Tuning</a>
+      <a href="database.html">Datenbank</a>
+      <a href="about.html">&Uuml;ber uns</a>
+    </div>
+  </div>
+</nav>
+  <main class="main">
+    <div class="main-panel">
+  <div class="container">
+    <section class="page-head">
+      <h1>Validation</h1>
+      <p>Alignments gegen Referenz bewerten: Sensitivity, Specificity, Coverage, Mean Shift Error. &Uuml;bersicht mit Mittelwerten und pro Block inkl. Rohausgabe.</p>
+    </section>
+    <p class="page-head" style="margin-top:0;font-size:0.8rem;">Test: <a href="test/mini.validation.ali">mini</a> / <a href="test/example.validation.ali">example</a> / <a href="test/example_validation_good.ali">gutes Beispiel (~0,8)</a>.validation.ali &ndash; <a href="validation_plots.html">Plots</a>. Alignment (ali) + Referenz = hier hochladen.</p>
+    <form action="cgi-bin/validate.cgi" method="post" enctype="multipart/form-data" class="panel">
+      <h2>Eingabe</h2>
+      <div class="field-group">
+        <div class="field-title">Alignment-Pairs <em>(5 Zeilen/Block: Header, Kandidat seq1/2, Referenz seq1/2)</em></div>
+        <div class="source-picker">
+          <div class="source-toggle" data-field="alignment">
+            <button type="button" class="seg active" data-mode="upload">Hochladen</button>
+            <button type="button" class="seg" data-mode="example">Beispiel w&auml;hlen</button>
+          </div>
+          <div class="source-input active" data-mode="upload" data-field="alignment">
+            <input type="file" name="alignment_pairs_file" accept=".txt,.ali">
+          </div>
+          <div class="source-input" data-mode="example" data-field="alignment">
+            <select name="alignment_example"><option value="">&ndash; w&auml;hlen &ndash;</option><option value="example.validation.ali">example.validation.ali</option><option value="mini.validation.ali">mini.validation.ali</option><option value="example_validation_good.ali">example_validation_good.ali (Sens/Spec ~0,8)</option></select>
+          </div>
+        </div>
+      </div>
+      <input type="hidden" name="show_plots" value="1">
+      <div class="form-actions">
+        <button type="submit" class="btn">Validation ausf&uuml;hren</button>
+      </div>
+    </form>
+    <form action="cgi-bin/validate.cgi" method="post" class="panel">
+      <h2>Vergleich mit/ohne Sekund&auml;rstruktur (HOMSTRAD)</h2>
+      <p style="font-size:0.9rem;color:var(--text-muted);margin-bottom:0.75rem;">Zwei Alignments (ohne SS und mit SS) gegen dieselbe HOMSTRAD-Referenz; Plots zeigen Sensitivity und Specificity. <strong>3D-F&auml;rbung sehen:</strong> Nach &bdquo;Vergleich ausf&uuml;hren&ldquo; im Ergebnis nach unten scrollen und auf &bdquo;Sekund&auml;rstrukturen in 3D (JSmol) anzeigen&ldquo; klicken – dann erscheint die 3D-Ansicht mit F&auml;rbung (Helix rot, Strang gelb, Coil grau). <strong>Geeignete Paare</strong> (beide in derselben HOMSTRAD-Familie): z.&nbsp;B. 2pgd/1pgjb, 1bif/1k6ma, 1bgxt/1x01a, 1c8ca/1azpa, 1ayoa/1edya, 1qqfa/1c3d, 1g41a/1e94e, 1e32a/1d2na, 1bOua/1f30a, 1g291.</p>
+      <div class="field-group" style="display:flex;flex-wrap:wrap;gap:1rem;align-items:flex-end;">
+        <div>
+          <label class="field-title">PDB-ID 1</label>
+          <input type="text" name="pdb_id1" value="2pgd" list="pdb_ids" placeholder="z.B. 2pgd" style="padding:0.45rem 0.65rem;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:0.9rem;width:8rem;">
+        </div>
+        <div>
+          <label class="field-title">PDB-ID 2</label>
+          <input type="text" name="pdb_id2" value="1pgjb" list="pdb_ids" placeholder="z.B. 1pgjb" style="padding:0.45rem 0.65rem;border:1px solid var(--border);border-radius:var(--radius-sm);font-size:0.9rem;width:8rem;">
+        </div>
+        <datalist id="pdb_ids">
+          <option value="1bgxt"><option value="1x01a"><option value="1bif"><option value="1k6ma"><option value="2pgd"><option value="1pgjb"><option value="1c8ca"><option value="1azpa"><option value="1ayoa"><option value="1edya"><option value="1qqfa"><option value="1c3d"><option value="1g41a"><option value="1e94e"><option value="1e32a"><option value="1d2na"><option value="1bOua"><option value="1f30a"><option value="1g291">
+        </datalist>
+        <input type="hidden" name="compare_ss" value="1">
+        <div style="align-self:flex-end;">
+          <button type="submit" class="btn">Vergleich ausf&uuml;hren</button>
+        </div>
+      </div>
+    </form>
+  </div>
+    </div>
+  </main>
+  <footer class="footer">
+    <span class="footer-brand">Programmierpraktikum WS 2025/2026 &middot; Gruppe 17</span>
+    <nav class="footer-nav" aria-label="Seitennavigation">
+      <a href="index.html">Start</a>
+      <span class="footer-divider">|</span>
+      <a href="alignment.html">Alignment</a>
+      <span class="footer-divider">|</span>
+      <a href="validation.html">Validation</a>
+      <span class="footer-divider">|</span>
+      <a href="correlations.html">HOMSTRAD Benchmark</a>
+      <span class="footer-divider">|</span>
+      <a href="tuning.html">Tuning</a>
+      <span class="footer-divider">|</span>
+      <a href="about.html">&Uuml;ber uns</a>
+    </nav>
+  </footer>
+  <script>
+(function() {
+  document.querySelectorAll(".source-toggle").forEach(function(toggle) {
+    var picker = toggle.closest(".source-picker");
+    if (!picker) return;
+    var uploadInput = picker.querySelector(".source-input[data-mode='upload'] input[type='file']");
+    var exampleSelect = picker.querySelector(".source-input[data-mode='example'] select");
+    toggle.querySelectorAll(".seg").forEach(function(btn) {
+      btn.addEventListener("click", function() {
+        var mode = btn.getAttribute("data-mode");
+        toggle.querySelectorAll(".seg").forEach(function(b) { b.classList.remove("active"); });
+        btn.classList.add("active");
+        picker.querySelectorAll(".source-input").forEach(function(el) {
+          el.classList.toggle("active", el.getAttribute("data-mode") === mode);
+        });
+        if (mode === "example") { if (uploadInput) uploadInput.value = ""; }
+        else { if (exampleSelect) exampleSelect.selectedIndex = 0; }
+      });
+    });
+  });
+})();
+  </script>
+</body>
+</html>

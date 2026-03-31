@@ -1,0 +1,8 @@
+ommit erstellen:
+git commit -m "Beschreibung"
+
+Aenderungen hochladen:
+git push
+
+Aenderungen holen:
+git pull

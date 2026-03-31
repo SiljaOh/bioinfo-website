@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Validation &ndash; Plots &amp; Benchmark</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    :root { --bg: #f6f5f2; --surface: #fff; --text: #1a1d23; --muted: #5c6169; --accent: #0d6b5c; --border: #e2e0db; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: "DM Sans", system-ui, sans-serif; background: var(--bg); color: var(--text); padding: 1rem; }
+    .container { max-width: 1200px; margin: 0 auto; }
+    h1 { font-size: 1.5rem; margin: 0 0 0.5rem; }
+    .sub { color: var(--muted); margin-bottom: 1.5rem; }
+    a { color: var(--accent); }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+    .card { background: var(--surface); border-radius: 12px; padding: 1rem 1.25rem; border: 1px solid var(--border); }
+    .card h2 { font-size: 1rem; margin: 0 0 0.75rem; color: var(--accent); }
+    .card canvas { max-width: 100%; height: auto !important; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Validation &ndash; Plots &amp; Benchmark</h1>
+    <p class="sub">Beispiel-Plots zur Darstellung von Sensitivity, Specificity, Coverage und MSE (HOMSTRAD-Validation). <a href="validation.html">Zur&uuml;ck zur Validation</a></p>
+
+    <div class="grid">
+      <div class="card">
+        <h2>1. Sensitivity vs. Specificity (Korrelation)</h2>
+        <canvas id="c1"></canvas>
+      </div>
+      <div class="card">
+        <h2>2. MSE vs. inverse MSE (Korrelation)</h2>
+        <canvas id="c2"></canvas>
+      </div>
+      <div class="card">
+        <h2>3. Sensitivity pro Block (Ausschnitt)</h2>
+        <canvas id="c3"></canvas>
+      </div>
+      <div class="card">
+        <h2>4. Specificity pro Block (Ausschnitt)</h2>
+        <canvas id="c4"></canvas>
+      </div>
+      <div class="card">
+        <h2>5. Coverage pro Block (Ausschnitt)</h2>
+        <canvas id="c5"></canvas>
+      </div>
+      <div class="card">
+        <h2>6. Mittlere Metriken nach Parameter-Set</h2>
+        <canvas id="c6"></canvas>
+      </div>
+      <div class="card">
+        <h2>7. Verteilung Sensitivity (Histogramm)</h2>
+        <canvas id="c7"></canvas>
+      </div>
+      <div class="card">
+        <h2>8. Sequenz-Identit&auml;t vs. Sensitivity</h2>
+        <canvas id="c8"></canvas>
+      </div>
+      <div class="card">
+        <h2>9. Mittlerer MSE nach Matrix</h2>
+        <canvas id="c9"></canvas>
+      </div>
+      <div class="card">
+        <h2>10. &Uuml;bersicht Metriken (Balken)</h2>
+        <canvas id="c10"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    Chart.defaults.font.family = "'DM Sans', system-ui, sans-serif";
+    Chart.defaults.color = "#5c6169";
+
+    // Beispieldaten (werden durch test/validation_data.json ersetzt, falls vorhanden)
+    var sens = [0.44, 1.0, 0.90, 0.98, 1.0, 0.39, 0.10, 0.14, 0.13, 0.52, 0.87, 0.87, 0.81, 0.23, 0.95, 0.88, 0.72, 1.0, 0.65, 0.91];
+    var spec = [0.45, 1.0, 0.89, 0.98, 1.0, 0.38, 0.11, 0.15, 0.16, 0.52, 0.86, 0.87, 0.81, 0.23, 0.94, 0.88, 0.72, 1.0, 0.64, 0.90];
+    var cov  = [0.96, 1.0, 0.97, 0.99, 1.0, 0.92, 0.96, 0.93, 0.97, 0.94, 0.98, 1.0, 0.94, 0.72, 0.97, 0.96, 0.95, 1.0, 0.91, 0.98];
+    var mse  = [2.0, 0, 0.19, 0.01, 0, 5.4, 29.6, 50.8, 86.0, 1.85, 0.15, 0.24, 0.55, 23.8, 0.03, 0.12, 0.48, 0, 2.1, 0.08];
+    var inv  = [1.87, 0, 0.23, 0.02, 0, 2.63, 19.5, 28.1, 7.3, 0.67, 0.15, 0.13, 0.67, 38.0, 0.03, 0.09, 0.52, 0, 1.8, 0.06];
+    var labels = ["5_3_exo", "6PF2K", "6PGD", "7kD_DNA", "A2M_B", "AAA_0_2", "AAA_0_3", "AAA_1_2", "AAA_1_3", "AAA_2_3", "ABC_0_1", "ABC_0_2", "ABC_0_3", "ABC_0_4", "A2M_A", "7kD", "B1", "B2", "B3", "B4"];
+
+    function drawCharts() {
+      var n = sens.length;
+      var avgS = n ? sens.reduce(function(a,b){ return a+b; }, 0) / n : 0;
+      var avgP = n ? spec.reduce(function(a,b){ return a+b; }, 0) / n : 0;
+      var avgC = n ? cov.reduce(function(a,b){ return a+b; }, 0) / n : 0;
+      var avgM = n ? mse.reduce(function(a,b){ return a+b; }, 0) / n : 0;
+      var paramLabels = n ? ["Diese Datei"] : [];
+      var avgSens = n ? [avgS] : [];
+      var avgSpec = n ? [avgP] : [];
+      var avgCov  = n ? [avgC] : [];
+      var counts = [
+        sens.filter(function(s){ return s < 0.2; }).length,
+        sens.filter(function(s){ return s >= 0.2 && s < 0.4; }).length,
+        sens.filter(function(s){ return s >= 0.4 && s < 0.6; }).length,
+        sens.filter(function(s){ return s >= 0.6 && s < 0.8; }).length,
+        sens.filter(function(s){ return s >= 0.8; }).length
+      ];
+      // Block-Index als Proxy fuer Identitaet wenn keine echten Identitaetsdaten
+      var identX = sens.map(function(_, i){ return i; });
+
+    // 1. Scatter Sensitivity vs Specificity
+    new Chart(document.getElementById("c1"), {
+      type: "scatter",
+      data: {
+        datasets: [{ label: "Block", data: sens.map((s,i)=>({x:s,y:spec[i]})), backgroundColor: "rgba(13,107,92,0.6)", borderColor: "#0d6b5c", pointRadius: 6 }]
+      },
+      options: { scales: { x: { title: { display: true, text: "Sensitivity" }, min: 0, max: 1.05 }, y: { title: { display: true, text: "Specificity" }, min: 0, max: 1.05 } }, plugins: { legend: { display: false } }
+    });
+
+    // 2. Scatter MSE vs invMSE
+    new Chart(document.getElementById("c2"), {
+      type: "scatter",
+      data: {
+        datasets: [{ label: "Block", data: mse.map((m,i)=>({x:m,y:inv[i]})), backgroundColor: "rgba(42,157,143,0.6)", borderColor: "#2a9d8f", pointRadius: 6 }]
+      },
+      options: { scales: { x: { title: { display: true, text: "MSE" }, beginAtZero: true }, y: { title: { display: true, text: "inv. MSE" }, beginAtZero: true } }, plugins: { legend: { display: false } }
+    });
+
+    // 3. Bar Sensitivity pro Block
+    new Chart(document.getElementById("c3"), {
+      type: "bar",
+      data: { labels: labels, datasets: [{ label: "Sensitivity", data: sens, backgroundColor: "rgba(13,107,92,0.7)", borderColor: "#0d6b5c" }] },
+      options: { scales: { y: { min: 0, max: 1.05 } }, plugins: { legend: { display: false } }
+    });
+
+    // 4. Bar Specificity pro Block
+    new Chart(document.getElementById("c4"), {
+      type: "bar",
+      data: { labels: labels, datasets: [{ label: "Specificity", data: spec, backgroundColor: "rgba(42,157,143,0.7)", borderColor: "#2a9d8f" }] },
+      options: { scales: { y: { min: 0, max: 1.05 } }, plugins: { legend: { display: false } }
+    });
+
+    // 5. Bar Coverage pro Block
+    new Chart(document.getElementById("c5"), {
+      type: "bar",
+      data: { labels: labels, datasets: [{ label: "Coverage", data: cov, backgroundColor: "rgba(13,107,92,0.5)", borderColor: "#0d6b5c" }] },
+      options: { scales: { y: { min: 0, max: 1.05 } }, plugins: { legend: { display: false } }
+    });
+
+    // 6. Mittlere Metriken (eine Gruppe = diese Datei)
+    new Chart(document.getElementById("c6"), {
+      type: "bar",
+      data: {
+        labels: paramLabels.length ? paramLabels : ["Mittelwerte"],
+        datasets: [
+          { label: "Ø Sensitivity", data: avgSens.length ? avgSens : [avgS], backgroundColor: "rgba(13,107,92,0.8)" },
+          { label: "Ø Specificity", data: avgSpec.length ? avgSpec : [avgP], backgroundColor: "rgba(42,157,143,0.8)" },
+          { label: "Ø Coverage", data: avgCov.length ? avgCov : [avgC], backgroundColor: "rgba(13,107,92,0.4)" }
+        ]
+      },
+      options: { scales: { y: { min: 0, max: 1.05 } }, plugins: { legend: { position: "top" } }
+    });
+
+    // 7. Histogram Sensitivity (0-0.2, 0.2-0.4, ...)
+    new Chart(document.getElementById("c7"), {
+      type: "bar",
+      data: {
+        labels: ["0-0.2", "0.2-0.4", "0.4-0.6", "0.6-0.8", "0.8-1.0"],
+        datasets: [{ label: "Anzahl", data: counts, backgroundColor: "rgba(13,107,92,0.7)" }]
+      },
+      options: { scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }, plugins: { legend: { display: false } }
+    });
+
+    // 8. Block-Index vs Sensitivity (oder Sequenz-Identität, falls vorhanden)
+    new Chart(document.getElementById("c8"), {
+      type: "scatter",
+      data: {
+        datasets: [{ label: "Block", data: sens.map(function(s,i){ return { x: identX[i], y: s }; }), backgroundColor: "rgba(13,107,92,0.6)", borderColor: "#0d6b5c", pointRadius: 6 }]
+      },
+      options: { scales: { x: { title: { display: true, text: "Block-Index" }, beginAtZero: true }, y: { title: { display: true, text: "Sensitivity" }, min: 0, max: 1.05 } }, plugins: { legend: { display: false } }
+    });
+
+    // 9. Mittlerer MSE (diese Datei)
+    new Chart(document.getElementById("c9"), {
+      type: "bar",
+      data: {
+        labels: ["Diese Datei"],
+        datasets: [{ label: "Ø MSE", data: [avgM], backgroundColor: "#0d6b5c" }]
+      },
+      options: { scales: { y: { beginAtZero: true } }, plugins: { legend: { display: false } }
+    });
+
+    // 10. Übersicht: Sens, Spec, Cov als Balken
+    new Chart(document.getElementById("c10"), {
+      type: "bar",
+      data: {
+        labels: ["Sensitivity", "Specificity", "Coverage"],
+        datasets: [{ label: "Mittelwert", data: [avgS, avgP, avgC], backgroundColor: ["#0d6b5c","#2a9d8f","#5cb8a8"] }]
+      },
+      options: { scales: { y: { min: 0, max: 1.05 } }, plugins: { legend: { display: false } }
+    });
+    }
+
+    // Optional: Echte Daten aus test/validation_data.json (von parse_validation_to_json.py erzeugt)
+    fetch("test/validation_data.json")
+      .then(function(r){ return r.ok ? r.json() : Promise.reject(); })
+      .then(function(data){
+        if (data.sens && data.sens.length) {
+          sens = data.sens;
+          spec = data.spec;
+          cov = data.cov;
+          mse = data.mse;
+          inv = data.inv_mse || [];
+          labels = data.labels || sens.map(function(_,i){ return "B" + i; });
+          document.querySelector(".sub").innerHTML = "Echte Daten aus <code>" + (data.source || "validation_data.json") + "</code> (" + (data.n_blocks || sens.length) + " Bl&ouml;cke). <a href=\"validation.html\">Zur&uuml;ck zur Validation</a>";
+        }
+        drawCharts();
+      })
+      .catch(function(){ drawCharts(); });
+  </script>
+</body>
+</html>

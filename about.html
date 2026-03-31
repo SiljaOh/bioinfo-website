@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Über uns &ndash; ProgPrakt WS 2025/2026 Gruppe 17</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --green: #059669;
+      --green-light: #10b981;
+      --green-pale: #d1fae5;
+      --green-bg: #ecfdf5;
+      --teal: #0d9488;
+      --teal-light: #2dd4bf;
+      --radius: 16px;
+      --radius-lg: 24px;
+      --nav-h: 64px;
+      --content-max: 1160px;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    html, body { margin: 0; padding: 0; width: 100%; overflow-x: hidden; }
+
+    body {
+      font-family: "Outfit", system-ui, sans-serif;
+      background: linear-gradient(135deg, #ffffff 0%, var(--green-bg) 40%, #f0fdf4 70%, #ffffff 100%);
+      background-size: 400% 400%;
+      animation: gradientShift 20s ease infinite;
+      color: #134e4a;
+      line-height: 1.6;
+      min-height: 100vh;
+      padding-top: var(--nav-h);
+    }
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    .site-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      height: var(--nav-h);
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(16, 185, 129, 0.2);
+      box-shadow: 0 4px 24px rgba(16, 185, 129, 0.08);
+    }
+    .site-nav-inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
+    .site-nav-brand {
+      font-weight: 800;
+      font-size: 1.2rem;
+      background: linear-gradient(135deg, var(--green), var(--teal-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+    .site-nav-brand:hover { opacity: 0.9; text-decoration: none; }
+    .site-nav-links { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem 0.75rem; }
+    .site-nav-links a {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #047857;
+      text-decoration: none;
+      padding: 0.45rem 0.85rem;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+    }
+    .site-nav-links a:hover {
+      color: var(--green);
+      background: var(--green-pale);
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
+    }
+
+    .page-hero {
+      background: linear-gradient(180deg, rgba(209, 250, 229, 0.6) 0%, rgba(236, 253, 245, 0.95) 50%, rgba(255,255,255,0.9) 100%);
+      padding: 2.5rem 1.5rem 2rem;
+      text-align: center;
+      border-bottom: 1px solid rgba(16, 185, 129, 0.15);
+    }
+    .page-hero h1 {
+      margin: 0 0 0.25rem 0;
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 800;
+      color: #065f46;
+      letter-spacing: -0.02em;
+    }
+    .page-hero p { margin: 0; font-size: 1rem; color: #047857; }
+
+    .main {
+      max-width: var(--content-max);
+      margin: 0 auto;
+      padding: 2rem 1.25rem 3rem;
+    }
+    .main-panel {
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem 2rem 3rem;
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      box-shadow: 0 25px 50px -12px rgba(16, 185, 129, 0.1);
+    }
+
+    .about-photos {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem 2rem;
+      margin-bottom: 2.5rem;
+    }
+    .about-avatars {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .about-avatars img {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--green-light);
+      box-shadow: 0 4px 16px rgba(16, 185, 129, 0.25);
+    }
+    .about-group-photo {
+      width: 100%;
+      max-width: 480px;
+      height: 200px;
+      object-fit: cover;
+      object-position: center;
+      border-radius: var(--radius);
+    }
+
+    .about-section {
+      margin-bottom: 2rem;
+    }
+    .about-section:last-of-type { margin-bottom: 0; }
+    .about-section h2 {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #065f46;
+      margin: 0 0 1rem 0;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--green-pale);
+    }
+    .about-section p {
+      margin: 0 0 1rem 0;
+      color: #134e4a;
+      font-size: 1rem;
+      line-height: 1.65;
+    }
+    .about-section p:last-child { margin-bottom: 0; }
+    .about-section .highlight {
+      background: linear-gradient(135deg, var(--green-pale) 0%, rgba(255,255,255,0.9) 100%);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      font-weight: 600;
+      color: #065f46;
+    }
+
+    .footer {
+      background: linear-gradient(180deg, #065f46 0%, #047857 100%);
+      color: rgba(255, 255, 255, 0.9);
+      padding: 2rem 1.5rem;
+      font-size: 0.9rem;
+      text-align: center;
+      border-top: 2px solid rgba(16, 185, 129, 0.3);
+    }
+    .footer-brand { display: block; margin-bottom: 1rem; font-weight: 700; color: #fff; }
+    .footer-nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.4rem 1rem; }
+    .footer-nav a {
+      color: #d1fae5;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.25s ease;
+    }
+    .footer-nav a:hover { color: #fff; text-decoration: underline; transform: scale(1.05); }
+    .footer-divider { color: rgba(255,255,255,0.5); margin: 0 0.2rem; user-select: none; }
+
+    @media (max-width: 768px) {
+      .site-nav-inner { flex-wrap: wrap; justify-content: center; padding: 0.5rem 1rem; }
+      .site-nav { height: auto; min-height: var(--nav-h); }
+      body { padding-top: 5.5rem; }
+      .site-nav .site-nav-brand { width: 100%; text-align: center; }
+      .main-panel { padding: 1.5rem 1.25rem; }
+      .footer-nav { flex-direction: column; gap: 0.5rem; }
+      .footer-divider { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="site-nav" aria-label="Hauptnavigation">
+  <div class="site-nav-inner">
+    <a href="index.html" class="site-nav-brand">Bioinformatic Tools</a>
+    <div class="site-nav-links">
+      <a href="index.html#alignment">Alignment</a>
+      <a href="index.html#gor">GOR</a>
+      <a href="index.html#tools">Tools</a>
+      <a href="database.html">Datenbank</a>
+      <a href="git_guide.html">Git</a>
+      <a href="faq.html">FAQ</a>
+      <a href="about.html">&Uuml;ber uns</a>
+    </div>
+  </div>
+</nav>
+
+<header class="page-hero">
+  <h1>&Uuml;ber uns</h1>
+  <p>Programmierpraktikum Bioinformatik WS 2025/2026 &ndash; Gruppe 17</p>
+</header>
+
+<main class="main">
+  <div class="main-panel">
+
+    <section class="about-photos">
+      <div class="about-avatars">
+        <img src="img/zeno.jpg" alt="Zeno Fiocco">
+        <img src="img/silja.jpg" alt="Silja Ohlsen">
+        <img src="img/lara.jpg" alt="Lara Gro&szlig;">
+        <img src="img/anna.jpg" alt="Anna Niederlechner">
+      </div>
+      <img src="cgi-bin/gruppenbild.PNG" class="about-group-photo" alt="Gruppenfoto: Silja, Lara, Anna und Zeno">
+    </section>
+
+    <section class="about-section" id="wer-wir-sind">
+      <h2>Wer wir sind</h2>
+      <p>Wir sind Silja, Lara, Anna und Zeno &ndash; eine motivierte Projektgruppe aus dem Programmierpraktikum Bioinformatik im Wintersemester 2025/2026.</p>
+      <p>Uns verbindet die Begeisterung f&uuml;r die Schnittstelle zwischen Biologie, Informatik und Medizin. W&auml;hrend andere vielleicht nur Code oder nur Gene sehen, interessieren wir uns genau f&uuml;r den Punkt, an dem beides zusammenkommt: Algorithmen, die helfen, die Sprache des Lebens zu verstehen.</p>
+      <p>Gemeinsam entwickeln wir bioinformatische Werkzeuge, die biologische Sequenzen, Strukturen und Datenbanken analysieren. Dabei experimentieren wir mit verschiedenen Methoden, vergleichen Ans&auml;tze und versuchen, komplexe biologische Daten durch clevere Algorithmen verst&auml;ndlich zu machen.</p>
+    </section>
+
+    <section class="about-section" id="motivation">
+      <h2>Motivation</h2>
+      <p>Bioinformatik bedeutet f&uuml;r uns mehr als nur Programmieren.</p>
+      <p>Es ist die M&ouml;glichkeit, mit Code neue Perspektiven auf biologische Daten zu &ouml;ffnen.</p>
+      <p>Unsere Tools zeigen grundlegende Konzepte der computergest&uuml;tzten Analyse biologischer Daten &ndash; von Sequenzvergleichen bis hin zu strukturellen Betrachtungen. Gleichzeitig ist dieses Projekt f&uuml;r uns ein Experimentierfeld: ein Ort, an dem Neugier, Teamarbeit und viele Zeilen Code zusammenkommen.</p>
+    </section>
+
+    <section class="about-section">
+      <h2>Kurz gesagt</h2>
+      <p class="highlight">Vier K&ouml;pfe, viele Ideen und eine gemeinsame Mission &ndash; das Genom besser zu verstehen.</p>
+    </section>
+
+    <section class="about-section" id="kontakt">
+      <h2>Kontakt</h2>
+      <p>Falls Sie Fragen zu unseren Tools haben, Feedback geben m&ouml;chten oder einfach neugierig auf das Projekt sind, freuen wir uns &uuml;ber eine Nachricht.</p>
+    </section>
+
+  </div>
+</main>
+
+<footer class="footer">
+  <span class="footer-brand">Programmierpraktikum WS 2025/2026 &middot; Gruppe 17</span>
+  <nav class="footer-nav" aria-label="Seitennavigation">
+    <a href="index.html">Start</a>
+    <span class="footer-divider">|</span>
+    <a href="alignment.html">Alignment</a>
+    <span class="footer-divider">|</span>
+    <a href="validation.html">Validation</a>
+    <span class="footer-divider">|</span>
+    <a href="correlations.html">HOMSTRAD Benchmark</a>
+    <span class="footer-divider">|</span>
+    <a href="tuning.html">Tuning</a>
+    <span class="footer-divider">|</span>
+    <a href="benchmark.html">Algorithm Benchmark</a>
+    <span class="footer-divider">|</span>
+    <a href="database.html">Datenbank</a>
+    <span class="footer-divider">|</span>
+    <a href="index.html#tools">Tools</a>
+    <span class="footer-divider">&middot;</span>
+    <a href="git_guide.html">Git</a>
+    <span class="footer-divider">|</span>
+    <a href="faq.html">FAQ</a>
+    <span class="footer-divider">|</span>
+    <a href="about.html">&Uuml;ber uns</a>
+  </nav>
+</footer>
+
+</body>
+</html>

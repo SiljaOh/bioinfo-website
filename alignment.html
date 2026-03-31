@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Alignment | Bioinformatik PP</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --green: #059669;
+      --green-light: #10b981;
+      --green-pale: #d1fae5;
+      --green-bg: #ecfdf5;
+      --teal: #0d9488;
+      --teal-light: #2dd4bf;
+      --radius: 16px;
+      --radius-lg: 24px;
+      --nav-h: 64px;
+      --content-max: 1160px;
+      --accent: #059669;
+      --accent-hover: #047857;
+      --accent-light: #d1fae5;
+      --text: #134e4a;
+      --text-muted: #0f766e;
+      --border: rgba(16, 185, 129, 0.35);
+      --surface: #fff;
+      --bg: #ecfdf5;
+      --radius-sm: 8px;
+      --shadow: 0 2px 12px rgba(5, 150, 105, 0.1);
+      --font: "Outfit", system-ui, sans-serif;
+    }
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    @keyframes navLinkPop {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    html, body { margin: 0; padding: 0; width: 100%; overflow-x: hidden; }
+    body {
+      font-family: var(--font);
+      font-size: 1rem;
+      line-height: 1.55;
+      color: var(--text);
+      background: linear-gradient(135deg, #ffffff 0%, var(--green-bg) 40%, #f0fdf4 70%, #ffffff 100%);
+      background-size: 400% 400%;
+      animation: gradientShift 20s ease infinite;
+      min-height: 100vh;
+      padding-top: var(--nav-h);
+    }
+    .site-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      height: var(--nav-h);
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(16, 185, 129, 0.2);
+      box-shadow: 0 4px 24px rgba(16, 185, 129, 0.08);
+    }
+    .site-nav-inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
+    .site-nav-brand {
+      font-weight: 800;
+      font-size: 1.2rem;
+      background: linear-gradient(135deg, var(--green), var(--teal-light));
+      background-size: 200% 200%;
+      animation: gradientMove 4s ease infinite;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+    .site-nav-brand:hover { opacity: 0.9; text-decoration: none; }
+    .site-nav-links { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem 0.75rem; }
+    .site-nav-links a {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #047857;
+      text-decoration: none;
+      padding: 0.45rem 0.85rem;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+    }
+    .site-nav-links a:hover {
+      color: var(--green);
+      background: var(--green-pale);
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
+      animation: navLinkPop 0.4s ease;
+    }
+    .main {
+      position: relative;
+      z-index: 5;
+      max-width: var(--content-max);
+      margin: -2rem auto 0;
+      padding: 0 1.25rem 3rem;
+    }
+    .main-panel {
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem 2rem 3rem;
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      box-shadow: 0 25px 50px -12px rgba(16, 185, 129, 0.1);
+    }
+    .container { max-width: 880px; margin: 0 auto; padding: 0 1.25rem; }
+    .footer {
+      background: linear-gradient(180deg, #065f46 0%, #047857 100%);
+      color: rgba(255, 255, 255, 0.9);
+      padding: 2rem 1.5rem;
+      font-size: 0.9rem;
+      text-align: center;
+      border-top: 2px solid rgba(16, 185, 129, 0.3);
+    }
+    .footer-brand { display: block; margin-bottom: 1rem; font-weight: 700; color: #fff; }
+    .footer-nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.4rem 1rem; }
+    .footer-nav a {
+      color: #d1fae5;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.25s ease;
+    }
+    .footer-nav a:hover { color: #fff; text-decoration: underline; }
+    .footer-divider { color: rgba(255,255,255,0.5); margin: 0 0.2rem; user-select: none; }
+    @media (max-width: 768px) {
+      .site-nav-inner { flex-wrap: wrap; justify-content: center; padding: 0.5rem 1rem; }
+      .site-nav { height: auto; min-height: var(--nav-h); }
+      body { padding-top: 5.5rem; }
+    }
+    main { padding: 0.75rem 0 1.5rem; }
+    .page-head { margin-bottom: 0.5rem; }
+    .page-head h1 { font-size: 1.35rem; margin: 0 0 0.2rem; font-weight: 700; color: var(--text); }
+    .page-head p { margin: 0; color: var(--text-muted); font-size: 0.85rem; }
+    .panel {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 1rem 1.15rem;
+      margin-bottom: 1rem;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+    .panel h2 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin: 0 0 0.5rem;
+      padding-bottom: 0.35rem;
+      border-bottom: 2px solid var(--accent-light);
+      color: var(--accent);
+    }
+    .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem 1rem; }
+    @media (max-width: 700px) { .input-grid { grid-template-columns: 1fr; } }
+    .field-group {
+      margin-bottom: 0;
+      padding-bottom: 0.4rem;
+      border-bottom: none;
+    }
+    .field-group.full-width { grid-column: 1 / -1; }
+    .field-title { font-weight: 600; font-size: 0.8rem; margin-bottom: 0.3rem; color: var(--text); }
+    .field-title em { font-weight: 400; color: var(--text-muted); font-size: 0.75em; }
+    .info-tip {
+      position: relative;
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 1.05rem; height: 1.05rem; margin-left: 0.3rem;
+      border-radius: 999px; background: var(--accent-light); color: var(--accent);
+      font-size: 0.72rem; font-weight: 700; cursor: help; vertical-align: middle;
+      border: 1px solid rgba(13,107,92,0.18);
+    }
+    .info-tip::after {
+      content: attr(data-tip);
+      position: absolute;
+      left: 50%;
+      bottom: calc(100% + 10px);
+      transform: translateX(-50%);
+      width: min(260px, 70vw);
+      padding: 0.55rem 0.65rem;
+      border-radius: 8px;
+      background: #10201d;
+      color: #f5fbfa;
+      font-size: 0.74rem;
+      line-height: 1.45;
+      font-weight: 500;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.22);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.16s ease, transform 0.16s ease;
+      z-index: 30;
+    }
+    .info-tip::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: calc(100% + 4px);
+      transform: translateX(-50%);
+      border-width: 6px 6px 0 6px;
+      border-style: solid;
+      border-color: #10201d transparent transparent transparent;
+      opacity: 0;
+      transition: opacity 0.16s ease;
+      pointer-events: none;
+      z-index: 30;
+    }
+    .info-tip:hover::after, .info-tip:hover::before, .info-tip:focus::after, .info-tip:focus::before {
+      opacity: 1;
+    }
+    .info-tip:hover::after, .info-tip:focus::after {
+      transform: translateX(-50%) translateY(-2px);
+    }
+    .collapsible {
+      margin-top: 0.4rem; border: 1px dashed var(--border); border-radius: 10px; background: rgba(255,255,255,0.55);
+    }
+    .collapsible summary {
+      list-style: none; cursor: pointer; padding: 0.65rem 0.8rem; font-weight: 600; color: var(--accent);
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .collapsible summary::-webkit-details-marker { display: none; }
+    .collapsible summary::before { content: "+"; font-size: 1rem; line-height: 1; }
+    .collapsible[open] summary::before { content: "-"; }
+    .collapsible .collapsible-body { padding: 0 0.8rem 0.8rem; }
+
+    .source-picker { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+    .source-picker.text-below .source-input[data-mode="text"] {
+      width: 100%;
+      align-items: stretch;
+    }
+    .source-picker.text-below .source-input[data-mode="text"].active {
+      display: block;
+      flex-basis: 100%;
+    }
+    .source-picker.text-below .source-input[data-mode="text"] textarea {
+      min-height: 12rem;
+    }
+    .source-toggle {
+      display: inline-flex;
+      background: var(--bg);
+      border-radius: 999px;
+      padding: 2px;
+      border: 1px solid var(--border);
+      box-shadow: inset 0 1px 2px rgba(0,0,0,0.04);
+    }
+    .source-toggle .seg {
+      padding: 0.25rem 0.6rem;
+      border: none;
+      border-radius: 999px;
+      font-family: inherit;
+      font-size: 0.75rem;
+      font-weight: 500;
+      cursor: pointer;
+      background: transparent;
+      color: var(--text-muted);
+      transition: color 0.15s, background 0.15s;
+    }
+    .source-toggle .seg:hover { color: var(--text); }
+    .source-toggle .seg.active {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 1px 3px rgba(13,107,92,0.3);
+    }
+    .source-input { display: none; flex: 1; min-width: 0; align-items: center; }
+    .source-input.active { display: flex; }
+    .source-input textarea {
+      width: 100%;
+      min-height: 9rem;
+      padding: 0.55rem 0.65rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-family: Consolas, "Liberation Mono", monospace;
+      font-size: 0.8rem;
+      background: var(--surface);
+      resize: vertical;
+    }
+    .source-input input[type="file"] {
+      padding: 0.3rem 0.5rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-family: inherit;
+      font-size: 0.8rem;
+      background: var(--surface);
+      width: 100%;
+      max-width: 100%;
+    }
+    .source-input input[type="file"]::file-selector-button {
+      margin-right: 0.4rem;
+      padding: 0.2rem 0.45rem;
+      border: none;
+      border-radius: 4px;
+      background: var(--accent-light);
+      color: var(--accent);
+      font-weight: 500;
+      font-size: 0.72rem;
+      cursor: pointer;
+    }
+    .source-input select {
+      padding: 0.3rem 0.5rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-family: inherit;
+      font-size: 0.8rem;
+      background: var(--surface);
+      min-width: 0;
+      width: 100%;
+      max-width: 160px;
+      color: var(--text);
+    }
+
+    .inline-option { display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; margin-top: 0.2rem; }
+    .inline-option select, .inline-option input[type="text"], .inline-option input[type="number"] {
+      padding: 0.3rem 0.5rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-family: inherit;
+      font-size: 0.8rem;
+    }
+    .inline-option input[type="number"] { width: 3.5em; }
+    .ss-weight-input { min-width: 5em; width: 5em; }
+    .inline-option .hint { color: var(--text-muted); font-size: 0.75rem; }
+    .field-note { display: none; }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 0.35rem 0.75rem;
+      margin-bottom: 0;
+    }
+    @media (max-width: 700px) { .form-grid { grid-template-columns: repeat(2, 1fr); } }
+    .form-grid label { display: flex; flex-direction: column; gap: 0.2rem; }
+    .form-grid label span { font-weight: 500; font-size: 0.78rem; }
+    .form-grid input[type="number"], .form-grid select {
+      padding: 0.35rem 0.5rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-family: inherit;
+      font-size: 0.82rem;
+    }
+    .form-check { flex-direction: row !important; align-items: center; gap: 0.35rem; grid-column: span 2; }
+    .param-dp-ausgabe-row { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 1.5rem 2rem; align-items: flex-start; justify-content: flex-start; }
+    .param-dp-group { display: flex; flex-direction: column; gap: 0.5rem; }
+    .param-dp-ausgabe-row .param-ausgabe { display: flex; flex-direction: column; gap: 0.2rem; margin: 0; }
+    .param-dp-check { grid-column: span 1 !important; }
+    .form-check span { font-size: 0.8rem; }
+    .form-check input { width: auto; accent-color: var(--accent); }
+    .tuning-param-btn { grid-column: 4 / 6; justify-self: center; display: inline-flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.2rem; margin: 0.2rem 0 0; padding: 0.65rem 1rem; min-width: 9rem; max-width: 12rem; border-radius: var(--radius-sm); background: var(--accent-light); color: var(--accent); font-weight: 600; text-decoration: none; border: 1px solid var(--border); cursor: pointer; transition: background 0.2s, color 0.2s; box-sizing: border-box; align-self: flex-end; }
+    .tuning-param-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .tuning-param-label { font-size: 0.55em; text-transform: uppercase; letter-spacing: 0.03em; opacity: 0.9; white-space: nowrap; }
+    .tuning-param-text { font-size: 1em; white-space: nowrap; }
+    .param-range-bar-wrap { margin-top: 0.35rem; }
+    .param-range-bar { height: 6px; border-radius: 3px; background: rgba(13,107,92,0.15); position: relative; overflow: visible; }
+    .param-range-bar .range-good { position: absolute; top: 0; bottom: 0; border-radius: 3px; background: var(--green); opacity: 0.55; }
+    .param-range-label { font-size: 0.7rem; color: var(--text-muted); margin-top: 0.2rem; }
+    .dp-options-group { display: flex; flex-wrap: wrap; gap: 0.25rem 1rem; align-items: center; }
+    .option-with-tip { display: inline-flex; align-items: center; gap: 0.25rem; white-space: nowrap; }
+    .form-actions { margin-top: 0.1rem; }
+    .btn {
+      display: inline-block;
+      padding: 0.45rem 1rem;
+      font-family: inherit;
+      font-weight: 600;
+      border: none;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.88rem;
+      box-shadow: 0 2px 6px rgba(13,107,92,0.25);
+      transition: background 0.2s, transform 0.1s;
+    }
+    .btn:hover { background: var(--accent-hover); }
+    .btn:active { transform: scale(0.98); }
+    .page-head a { color: var(--accent); text-decoration: none; font-weight: 500; }
+    .page-head a:hover { text-decoration: underline; }
+    .page-head code { background: var(--accent-light); padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.88em; }
+  </style>
+</head>
+<body>
+<nav class="site-nav" aria-label="Hauptnavigation">
+  <div class="site-nav-inner">
+    <a href="index.html" class="site-nav-brand">Bioinformatic Tools</a>
+    <div class="site-nav-links">
+      <a href="alignment.html">Alignment</a>
+      <a href="validation.html">Validation</a>
+      <a href="correlations.html">HOMSTRAD Benchmark</a>
+      <a href="tuning.html">Tuning</a>
+      <a href="database.html">Datenbank</a>
+      <a href="about.html">&Uuml;ber uns</a>
+    </div>
+  </div>
+</nav>
+  <main class="main">
+    <div class="main-panel">
+  <div class="container">
+    <section class="page-head">
+      <h1>Alignment</h1>
+      <p>Pairwise-Alignment mit Gotoh (affine Gaps) oder Needleman-Wunsch (lineare Gaps).</p>
+    </section>
+    <p class="page-head" style="margin-top:0;font-size:0.8rem;">Testdateien: <a href="test/mini.pairs">mini</a>/<a href="test/example.pairs">example</a>.pairs + seqlib; optional <a href="test/dayhoff.mat">dayhoff.mat</a>. <strong>Bonus Sekund&auml;rstruktur:</strong> F&uuml;r Beispiel-Alignment mit SS-Scoring: Pairs <strong>example.pairs</strong>, Seqlib <strong>example.seqlib</strong>, Levitt <strong>levitt_matrix.txt</strong>, SS-Seqlib <strong>example.seqlib.ss</strong>, SS-Gewicht z.&nbsp;B. 0.3, Ausgabe <strong>HTML</strong> &ndash; dann erscheinen aligned SS (H/E/C) und 3D-Ansicht (JSmol).</p>
+    <form action="cgi-bin/alignment.cgi" method="post" enctype="multipart/form-data" class="panel">
+      <h2>Eingabe</h2>
+      <div class="input-grid">
+      <div class="field-group">
+        <div class="field-title">Pairs <em>(id1 id2)</em><span class="info-tip" data-tip="Optional. Wenn du Auto ausw&auml;hlst, werden alle Sequenzen paarweise gegeneinander ausgerichtet.">i</span></div>
+        <input type="hidden" name="pairs_mode" value="auto">
+        <div class="source-picker">
+          <div class="source-toggle" data-field="pairs">
+            <button type="button" class="seg" data-mode="upload">Hochladen</button>
+            <button type="button" class="seg" data-mode="example">Beispiel w&auml;hlen</button>
+            <button type="button" class="seg active" data-mode="auto">Auto (alle Paare)</button>
+          </div>
+          <div class="source-input" data-mode="upload" data-field="pairs">
+            <input type="file" name="pairs_file" accept=".pairs,.txt">
+          </div>
+          <div class="source-input" data-mode="example" data-field="pairs">
+            <select name="pairs_example"><option value="">&ndash; w&auml;hlen &ndash;</option><option value="example.pairs">example.pairs</option><option value="mini.pairs">mini.pairs</option></select>
+          </div>
+          <div class="source-input active" data-mode="auto" data-field="pairs">
+            <div class="field-note">Pairs werden automatisch aus allen eingegebenen / geladenen Sequenzen erzeugt: jede Sequenz gegen jede andere.</div>
+          </div>
+        </div>
+      </div>
+      <div class="field-group">
+        <div class="field-title">Seqlib <em>(id:SEQ)</em><span class="info-tip" data-tip="Optional, wenn du unten PDB-/UniProt-/SwissProt-IDs eingibst. Kann als Datei, Beispiel oder manuell als FASTA bzw. id:SEQ eingegeben werden.">i</span></div>
+        <input type="hidden" name="seqlib_mode" value="upload">
+        <div class="source-picker text-below">
+          <div class="source-toggle" data-field="seqlib">
+            <button type="button" class="seg active" data-mode="upload">Hochladen</button>
+            <button type="button" class="seg" data-mode="example">Beispiel w&auml;hlen</button>
+            <button type="button" class="seg" data-mode="text">Selbst eingeben</button>
+          </div>
+          <div class="source-input active" data-mode="upload" data-field="seqlib">
+            <input type="file" name="seqlib_file" accept=".seqlib,.txt,.db,.fasta,.fa,.faa">
+          </div>
+          <div class="source-input" data-mode="example" data-field="seqlib">
+            <select name="seqlib_example"><option value="">&ndash; w&auml;hlen &ndash;</option><option value="example.seqlib">example.seqlib</option><option value="mini.seqlib">mini.seqlib</option></select>
+          </div>
+          <div class="source-input" data-mode="text" data-field="seqlib">
+            <textarea name="seqlib_text" placeholder="FASTA oder id:SEQ eingeben, z.B.&#10;>Seq1&#10;MKTIIALSYI...&#10;>Seq2&#10;MKTIIALSYI...&#10;&#10;oder&#10;Seq1:MKTIIALSYI...&#10;Seq2:MKTIIALSYI..."></textarea>
+          </div>
+        </div>
+        <div class="field-note">Unterst&uuml;tzt FASTA oder <code>id:SEQ</code>. Wenn keine Pairs angegeben sind, k&ouml;nnen sie automatisch aus den Sequenzen erzeugt werden.</div>
+      </div>
+      <div class="field-group full-width">
+        <details class="collapsible">
+          <summary>Nur PDB-/UniProt-/SwissProt-IDs eingeben (Seqlib optional)</summary>
+          <div class="collapsible-body">
+            <div class="field-title">IDs automatisch in Sequenzen umwandeln<span class="info-tip" data-tip="Mehrere PDB-, SwissProt- oder UniProt-IDs. Bei PDB wird auch 1bgxT oder 1bgxA00 akzeptiert; verwendet werden automatisch die ersten 4 Zeichen als PDB-ID. Wenn mindestens zwei Sequenzen vorhanden sind, k&ouml;nnen die Pairs automatisch erzeugt werden. F&uuml;r bekannte PDB-IDs wird die passende Sekund&auml;rstruktur au&szlig;erdem automatisch aus der Datenbank geladen.">i</span></div>
+            <div class="inline-option">
+              <select name="seq_source"><option value="pdb">PDB</option><option value="swissprot">SwissProt</option><option value="uniprot">UniProt</option></select>
+              <span class="hint">eine ID pro Zeile oder durch Leerzeichen/Komma getrennt</span>
+            </div>
+            <div class="inline-option" style="margin-top:0.5rem;">
+              <textarea name="seq_source_keys" style="width:100%;min-height:7rem;padding:0.55rem 0.65rem;border:1px solid var(--border);border-radius:8px;font-family:Consolas,&quot;Liberation Mono&quot;,monospace;font-size:0.8rem;background:var(--surface);resize:vertical;" placeholder="z.B. 1pgjb, 2pgd (f&uuml;r zwei lokale Striche: Modus Local)">1pgjb
+2pgd</textarea>
+            </div>
+            <div class="field-note">Die gefundenen Sequenzen werden zur Seqlib hinzugef&uuml;gt. <strong>PDB:</strong> zuerst aus unserer Datenbank, sonst von RCSB. <strong>UniProt/SwissProt:</strong> werden bei Bedarf online (rest.uniprot.org) abgerufen. F&uuml;r bekannte PDB-IDs kann die Sekund&auml;rstruktur automatisch aus der Datenbank geladen werden.</div>
+          </div>
+        </details>
+      </div>
+      <div class="field-group">
+        <div class="field-title">Matrix <em>(opt.)</em><span class="info-tip" data-tip="Normale Substitutionsmatrix f&uuml;r Aminos&auml;uren, z. B. Dayhoff, BLOSUM62 oder PAM250.">i</span></div>
+        <div class="source-picker">
+          <div class="source-toggle" data-field="matrix">
+            <button type="button" class="seg active" data-mode="upload">Hochladen</button>
+            <button type="button" class="seg" data-mode="example">Beispiel w&auml;hlen</button>
+          </div>
+          <div class="source-input active" data-mode="upload" data-field="matrix">
+            <input type="file" name="matrix_file" accept=".mat,.txt">
+          </div>
+          <div class="source-input" data-mode="example" data-field="matrix">
+            <select name="matrix_example"><option value="">&ndash; w&auml;hlen &ndash;</option><option value="dayhoff.mat">dayhoff.mat</option><option value="blosum62.mat">blosum62.mat</option><option value="pam250.mat">pam250.mat</option><option value="BlakeCohenMatrix.mat">BlakeCohenMatrix.mat</option></select>
+          </div>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <div class="field-title">Levitt-Matrix <em>(opt., nur f&uuml;r Sekund&auml;rstruktur)</em><span class="info-tip" data-tip="Zus&auml;tzliche Matrix f&uuml;r H/E/C-Paare. Sie erg&auml;nzt die normale Aminos&auml;urematrix beim SS-Scoring.">i</span></div>
+        <div class="source-picker">
+          <div class="source-toggle" data-field="levitt">
+            <button type="button" class="seg active" data-mode="upload">Hochladen</button>
+            <button type="button" class="seg" data-mode="example">Beispiel w&auml;hlen</button>
+          </div>
+          <div class="source-input active" data-mode="upload" data-field="levitt">
+            <input type="file" name="levitt_file" accept=".txt,.mat">
+          </div>
+          <div class="source-input" data-mode="example" data-field="levitt">
+            <select name="levitt_example"><option value="">&ndash; w&auml;hlen &ndash;</option><option value="levitt_matrix.txt">levitt_matrix.txt</option></select>
+          </div>
+        </div>
+        <div class="field-note">Diese Matrix wird zus&auml;tzlich zur normalen Substitutionsmatrix verwendet und bewertet H/E/C-Paare f&uuml;r das Sekund&auml;rstruktur-Scoring.</div>
+      </div>
+      <div class="field-group">
+        <div class="field-title">SS-Seqlib <em>(opt.)</em><span class="info-tip" data-tip="Sekund&auml;rstruktur pro Sequenz mit denselben IDs wie in der Seqlib, z. B. H/E/C-Folgen.">i</span></div>
+        <div class="source-picker">
+          <div class="source-toggle" data-field="seqlib_ss">
+            <button type="button" class="seg active" data-mode="upload">Hochladen</button>
+            <button type="button" class="seg" data-mode="example">Beispiel w&auml;hlen</button>
+          </div>
+          <div class="source-input active" data-mode="upload" data-field="seqlib_ss">
+            <input type="file" name="seqlib_ss_file" accept=".txt,.seqlib">
+          </div>
+          <div class="source-input" data-mode="example" data-field="seqlib_ss">
+            <select name="seqlib_ss_example"><option value="">&ndash; w&auml;hlen &ndash;</option><option value="example.seqlib.ss">example.seqlib.ss</option></select>
+          </div>
+        </div>
+      </div>
+      <div class="field-group">
+        <div class="field-title">SS-Gewicht<span class="info-tip" data-tip="Gewichtet den Beitrag der Sekund&auml;rstruktur zur Gesamtbewertung. 0 = nur Sequenz, 1 = starker SS-Einfluss.">i</span></div>
+        <div class="inline-option">
+          <input type="number" name="ss_weight" value="0" min="0" max="1" step="0.05" class="ss-weight-input">
+        </div>
+        <div class="field-note">Gewichtet den Beitrag der Sekund&auml;rstruktur zur Gesamtbewertung. <code>0</code> = nur Sequenz (Standard), <code>0.3</code> = moderater SS-Einfluss, <code>1</code> = starker SS-Einfluss.</div>
+      </div>
+      </div>
+      <h2>Parameter</h2>
+      <div class="form-grid">
+        <label>
+          <span>Modus <span class="info-tip" data-tip="Global = ganze Sequenzen, Local = bestes Teilst&uuml;ck, Freeshift = freie Enden.">i</span></span>
+          <select name="mode">
+            <option value="global">Global</option>
+            <option value="local" selected>Local</option>
+            <option value="freeshift">Freeshift</option>
+          </select>
+        </label>
+        <label>
+          <span>Algorithmus <span class="info-tip" data-tip="Gotoh nutzt affine Gap-Kosten, Needleman-Wunsch lineare Gap-Kosten.">i</span></span>
+          <select name="algorithm">
+            <option value="gotoh">Gotoh (affine Gaps)</option>
+            <option value="nw">Needleman-Wunsch (linear)</option>
+          </select>
+        </label>
+        <label id="gap-open-label" class="gap-param">
+          <span>Gap Open <span class="info-tip" data-tip="Startkosten f&uuml;r eine neue L&uuml;cke bei Gotoh.">i</span></span>
+          <input type="number" name="gap_open" value="-12" step="1" id="gap_open_input">
+          <div class="param-range-bar-wrap">
+            <div class="param-range-bar" id="gap-open-range" style="width:100%;" title="Gr&uuml;n: empfohlener Bereich (z.&nbsp;B. Dayhoff/BLOSUM/PAM, Gotoh)">
+              <span class="range-good" id="gap-open-good" style="left:20%; width:60%;"></span>
+            </div>
+            <div class="param-range-label" id="gap-open-range-label">Empfohlen: ca. &minus;18 bis &minus;10 (z.&nbsp;B. &minus;15)</div>
+          </div>
+        </label>
+        <label id="gap-extend-label" class="gap-param">
+          <span>Gap Extend <span class="info-tip" data-tip="Kosten f&uuml;r das Verl&auml;ngern einer bereits begonnenen L&uuml;cke.">i</span></span>
+          <input type="number" name="gap_extend" value="-1" step="1" id="gap_extend_input">
+          <div class="param-range-bar-wrap">
+            <div class="param-range-bar" id="gap-extend-range" style="width:100%;" title="Gr&uuml;n: empfohlener Bereich">
+              <span class="range-good" id="gap-extend-good" style="left:50%; width:25%;"></span>
+            </div>
+            <div class="param-range-label" id="gap-extend-range-label">Empfohlen: &minus;2 bis &minus;1</div>
+          </div>
+        </label>
+        <div class="param-dp-ausgabe-row">
+          <div class="param-dp-group">
+            <label class="form-check param-dp-check">
+              <input type="checkbox" name="dpmatrices" value="1" checked>
+              <span class="option-with-tip">DP-Matrizen (Zahlen) anzeigen<span class="info-tip" data-tip="Score-Matrix M als Zahlenmatrix.">i</span></span>
+            </label>
+            <label class="form-check param-dp-check">
+              <input type="checkbox" name="dpmatrices_heatmap" value="1" checked>
+              <span class="option-with-tip">Fixed-Point-Heatmap anzeigen<span class="info-tip" data-tip="Farbdarstellung der Matrix M inkl. Trace-back-Pfad.">i</span></span>
+            </label>
+          </div>
+          <label class="param-ausgabe">
+            <span>Ausgabe <span class="info-tip" data-tip="ALI = Textformat, Scores = nur Scores, HTML = farbiges Ergebnis mit Zusatzansichten.">i</span></span>
+            <select name="format">
+              <option value="ali">Alignment (ali)</option>
+              <option value="scores">Nur Scores</option>
+              <option value="html" selected>HTML</option>
+            </select>
+          </label>
+        </div>
+        <a href="tuning.html" class="tuning-param-btn" title="Unsichere Parameter? Parameter-Tuning ausf&uuml;hren.">
+          <span class="tuning-param-label">Parameter-Tuning</span>
+          <span class="tuning-param-text">Unsicher?</span>
+        </a>
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn">Alignment ausf&uuml;hren</button>
+      </div>
+    </form>
+  </div>
+    </div>
+  </main>
+  <footer class="footer">
+    <span class="footer-brand">Programmierpraktikum WS 2025/2026 &middot; Gruppe 17</span>
+    <nav class="footer-nav" aria-label="Seitennavigation">
+      <a href="index.html">Start</a>
+      <span class="footer-divider">|</span>
+      <a href="alignment.html">Alignment</a>
+      <span class="footer-divider">|</span>
+      <a href="validation.html">Validation</a>
+      <span class="footer-divider">|</span>
+      <a href="correlations.html">HOMSTRAD Benchmark</a>
+      <span class="footer-divider">|</span>
+      <a href="tuning.html">Tuning</a>
+      <span class="footer-divider">|</span>
+      <a href="about.html">&Uuml;ber uns</a>
+    </nav>
+  </footer>
+  <script>
+(function() {
+  document.querySelectorAll(".source-toggle").forEach(function(toggle) {
+    var field = toggle.getAttribute("data-field");
+    var picker = toggle.closest(".source-picker");
+    if (!picker) return;
+    var modeHidden = picker.parentElement.querySelector("input[type='hidden'][name='" + field + "_mode']");
+    var uploadInput = picker.querySelector(".source-input[data-mode='upload'] input[type='file']");
+    var exampleSelect = picker.querySelector(".source-input[data-mode='example'] select");
+    var textArea = picker.querySelector(".source-input[data-mode='text'] textarea");
+    toggle.querySelectorAll(".seg").forEach(function(btn) {
+      btn.addEventListener("click", function() {
+        var mode = btn.getAttribute("data-mode");
+        if (modeHidden) modeHidden.value = mode;
+        toggle.querySelectorAll(".seg").forEach(function(b) { b.classList.remove("active"); });
+        btn.classList.add("active");
+        picker.querySelectorAll(".source-input").forEach(function(el) {
+          el.classList.toggle("active", el.getAttribute("data-mode") === mode);
+        });
+        if (mode !== "upload" && uploadInput) uploadInput.value = "";
+        if (mode !== "example" && exampleSelect) exampleSelect.selectedIndex = 0;
+        if (mode !== "text" && textArea) textArea.value = "";
+      });
+    });
+  });
+
+  function toggleGapParams() {
+    var alg = document.querySelector("select[name='algorithm']");
+    var labels = document.querySelectorAll(".gap-param");
+    var isNw = alg && alg.value === "nw";
+    labels.forEach(function(el) {
+      el.style.display = isNw ? "none" : "";
+    });
+  }
+  var algSelect = document.querySelector("select[name='algorithm']");
+  if (algSelect) {
+    algSelect.addEventListener("change", toggleGapParams);
+    toggleGapParams();
+  }
+})();
+  </script>
+</body>
+</html>

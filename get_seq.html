@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sequenz abrufen | Bioinformatik PP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root { --green: #059669; --green-pale: #d1fae5; --green-bg: #ecfdf5; --teal-light: #2dd4bf; --radius: 16px; --radius-lg: 24px; --nav-h: 64px; --content-max: 1160px; --accent: #059669; --accent-hover: #047857; --accent-light: #d1fae5; --text: #134e4a; --text-muted: #0f766e; --border: rgba(16, 185, 129, 0.35); --surface: #fff; --radius-sm: 8px; --font: "Outfit", system-ui, sans-serif; }
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; width: 100%; }
+    body { font-family: var(--font); font-size: 1rem; line-height: 1.55; color: var(--text); background: var(--green-bg); min-height: 100vh; padding-top: var(--nav-h); }
+    .site-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: var(--nav-h); background: rgba(255,255,255,0.9); border-bottom: 1px solid var(--border); }
+    .site-nav-inner { max-width: var(--content-max); margin: 0 auto; padding: 0 1.5rem; height: 100%; display: flex; align-items: center; justify-content: space-between; }
+    .site-nav-brand { font-weight: 800; font-size: 1.2rem; color: var(--accent); text-decoration: none; }
+    .site-nav-links a { font-size: 0.9rem; font-weight: 600; color: #047857; text-decoration: none; padding: 0.45rem 0.85rem; border-radius: 12px; }
+    .site-nav-links a:hover { color: var(--green); background: var(--green-pale); }
+    .main { max-width: var(--content-max); margin: 0 auto; padding: 2rem 1.25rem 3rem; }
+    .main-panel { background: var(--surface); border-radius: var(--radius-lg); padding: 2rem; border: 1px solid var(--border); box-shadow: 0 4px 20px rgba(5,150,105,0.08); }
+    .page-head h1 { font-size: 1.35rem; margin: 0 0 0.5rem; color: var(--text); }
+    .page-head p { margin: 0; color: var(--text-muted); font-size: 0.9rem; }
+    .field-group { margin-bottom: 1rem; }
+    .field-title { font-weight: 600; font-size: 0.9rem; margin-bottom: 0.35rem; }
+    .field-note { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.35rem; }
+    select, input, textarea { padding: 0.4rem 0.6rem; border: 1px solid var(--border); border-radius: var(--radius-sm); font-family: inherit; font-size: 0.9rem; }
+    textarea { width: 100%; min-height: 5rem; resize: vertical; }
+    .btn { display: inline-block; padding: 0.5rem 1.2rem; font-weight: 600; border: none; border-radius: var(--radius-sm); cursor: pointer; background: var(--accent); color: #fff; font-size: 0.9rem; }
+    .btn:hover { background: var(--accent-hover); }
+  </style>
+</head>
+<body>
+<nav class="site-nav">
+  <div class="site-nav-inner">
+    <a href="index.html" class="site-nav-brand">Bioinformatic Tools</a>
+    <div class="site-nav-links">
+      <a href="alignment.html">Alignment</a>
+      <a href="validation.html">Validation</a>
+      <a href="correlations.html">HOMSTRAD Benchmark</a>
+      <a href="tuning.html">Tuning</a>
+      <a href="database.html">Datenbank</a>
+      <a href="about.html">Über uns</a>
+    </div>
+  </div>
+</nav>
+<main class="main">
+  <div class="main-panel">
+    <section class="page-head">
+      <h1>Sequenz abrufen</h1>
+      <p>Sequenzen per <strong>PDB</strong>, <strong>UniProt</strong> oder <strong>SwissProt</strong> abrufen. Zuerst wird in unserer Datenbank gesucht, danach bei Bedarf online (RCSB für PDB, rest.uniprot.org für UniProt/SwissProt). Ausgabe: FASTA.</p>
+    </section>
+    <form action="cgi-bin/get_seq.cgi" method="get" class="field-group">
+      <div class="field-group">
+        <div class="field-title">Quelle</div>
+        <select name="source">
+          <option value="pdb">PDB</option>
+          <option value="uniprot">UniProt</option>
+          <option value="swissprot">SwissProt</option>
+        </select>
+      </div>
+      <div class="field-group">
+        <div class="field-title">ID(s) – eine pro Zeile oder durch Leerzeichen/Komma getrennt</div>
+        <textarea name="id" placeholder="z.B. 1tim 1crn&#10;oder P00439 P02768 (UniProt)"></textarea>
+        <div class="field-note">PDB: 4 Zeichen (z.B. 1tim, 1crn). UniProt/SwissProt: Accession (z.B. P00439).</div>
+        <div class="field-note" style="margin-top:0.5rem;"><strong>Beispiele, die funktionieren:</strong><br>
+          <strong>PDB</strong> (werden aus unserer DB oder sonst von RCSB online geholt): <code>1tim</code>, <code>1crn</code>, <code>2pgd</code>, <code>1bgx</code>, <code>1aho</code>.<br>
+          <strong>UniProt</strong> (online): <code>P00439</code> (Cytochrom c), <code>P02768</code> (Serumalbumin), <code>P61626</code> (Lysozym), <code>P12345</code>.
+        </div>
+      </div>
+      <button type="submit" class="btn">FASTA abrufen</button>
+    </form>
+    <p class="field-note" style="margin-top:1rem;">PDB-IDs wie 1tim, die nicht in unserer Datenbank sind, werden automatisch von der RCSB (files.rcsb.org) geladen. Die gleiche Abfrage ist auch auf <a href="alignment.html">Alignment</a> und <a href="tuning.html">Tuning</a> unter „IDs automatisch in Sequenzen umwandeln“ verfügbar.</p>
+  </div>
+</main>
+</body>
+</html>

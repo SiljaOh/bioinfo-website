@@ -1,0 +1,831 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>ProgPrakt WS 2025/2026 - Gruppe 17</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bio-green: #0d6b5c;
+  --bio-green-light: #d4ede8;
+  --bio-green-pale: #e8f6f3;
+  --bio-teal: #2a9d8f;
+  --bio-dark: #0f2926;
+  --bio-deep: #0a1f1c;
+  --text: #1a2e2a;
+  --text-muted: #4a6560;
+  --card-bg: #ffffff;
+  --border: #c5e0db;
+}
+
+.header-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:40px;
+}
+
+.header-title{
+  text-align:center;
+  flex:1;
+}
+
+.logo-left,
+.logo-right{
+  height:85px;          /* größer */
+  width:auto;
+  border-radius:12px;   /* gerundete Ecken */
+  padding:6px;          /* etwas Abstand zum Rand */
+  background:#ffffff;   /* weißer Hintergrund für klare Logos */
+  box-shadow:0 6px 18px rgba(0,0,0,0.25); /* leichte Tiefe */
+}
+
+.logo-left{
+  margin-left:10px;
+}
+
+.logo-right{
+  margin-right:10px;
+}
+
+.sequence{
+font-family:"JetBrains Mono", monospace;
+letter-spacing:2px;
+color:#9ae6d9;
+}
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden; 
+}
+
+
+body {
+  margin: 0;
+  font-family: "DM Sans", system-ui, sans-serif;
+  background: radial-gradient(circle at top right, #11594d, var(--bio-deep) 60%);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(13,107,92,0.06) 0%, transparent 40%),
+    repeating-linear-gradient(0deg, transparent, transparent 32px, rgba(13,107,92,0.03) 32px, rgba(13,107,92,0.03) 33px),
+    repeating-linear-gradient(90deg, transparent, transparent 32px, rgba(13,107,92,0.03) 32px, rgba(13,107,92,0.03) 33px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+ 
+.header {
+  position: relative;
+  color: #fff;
+  padding: 40px 24px 48px;
+  overflow: hidden;
+  width: 100%;
+}
+ 
+
+.header-inner { position: relative; z-index: 1; }
+.header h1 {
+  margin: 0 0 6px 0;
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+.hero-dots {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 14px;
+}
+.hero-dots span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.45);
+}
+
+.main {
+  position: relative;
+  z-index: 1;
+  max-width: 1050;
+  margin: -40px auto 0;
+  padding: 0 20px 56px;
+}
+.main-panel {
+  background: linear-gradient(180deg, rgba(255,255,255,0.97) 0%, rgba(248,252,251,0.98) 100%);
+  border-radius: 20px;
+  padding: 36px 32px 40px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+  backdrop-filter: blur(8px);
+}
+
+.intro {
+  background: linear-gradient(135deg, var(--bio-green-pale) 0%, var(--bio-green-light) 100%);
+  border-radius: 16px;
+  padding: 24px 28px;
+  margin-bottom: 36px;
+  border: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+.intro::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(13,107,92,0.08) 0%, transparent 70%);
+  border-radius: 50%;
+}
+.intro h2 {
+  margin: 0 0 24px 0;
+  font-size: 1.25rem;
+  color: var(--bio-dark);
+  position: relative;
+  text-align: center;
+}
+.intro p {
+  margin: 6px 0;
+  position: relative;
+}
+.intro a {
+  color: var(--bio-green);
+  text-decoration: none;
+  font-weight: 500;
+}
+.intro a:hover {
+  text-decoration: underline;
+}
+
+.team-grid {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  margin: 20px 0 24px 0;
+  flex-wrap: wrap;
+}
+.team-card {
+  width: 260px;
+}
+.team-card h4 {
+  margin: 0 0 18px 0;
+  color: var(--bio-dark);
+  font-size: 1rem;
+  text-align: center;
+}
+.team-members {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.member {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.member img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--bio-green);
+  background: #fff;
+}
+.member-info strong {
+  color: var(--text);
+  font-size: 0.95rem;
+}
+
+.section {
+  margin-bottom: 40px;
+}
+.section:last-of-type {
+  margin-bottom: 0;
+}
+
+.section-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--bio-green);
+  margin: 0 0 18px 0;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--bio-green-light);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-title .icon {
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, var(--bio-green) 0%, var(--bio-teal) 100%);
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: #fff;
+  font-weight: bold;
+  box-shadow: 0 4px 12px rgba(13,107,92,0.3);
+}
+.section-title .emoji {
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px 20px;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--bio-green), var(--bio-teal));
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.card:hover {
+  border-color: var(--bio-teal);
+  box-shadow: 0 12px 28px rgba(13,107,92,0.12);
+  transform: translateY(-2px);
+}
+.card:hover::before {
+  opacity: 1;
+}
+.card a {
+  color: var(--bio-green);
+  text-decoration: none;
+  font-weight: 600;
+  display: block;
+  font-size: 1.02rem;
+}
+.card a:hover {
+  text-decoration: underline;
+}
+.card small {
+  display: block;
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  margin-top: 6px;
+  line-height: 1.4;
+}
+
+.desc-block {
+  background: linear-gradient(135deg, var(--bio-green-pale) 0%, var(--bio-green-light) 100%);
+  border-radius: 14px;
+  padding: 20px 24px;
+  margin-bottom: 20px;
+  font-size: 0.95rem;
+  color: var(--bio-dark);
+  line-height: 1.6;
+  border: 1px solid var(--border);
+}
+
+.link-list{
+list-style:none;
+margin:0;
+padding:0;
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+gap:18px 26px;
+}
+
+.link-list li{
+margin:0;
+}
+
+.link-list a{
+color:var(--bio-green);
+text-decoration:none;
+font-weight:600;
+display:block;
+margin-bottom:4px;
+padding:0;
+}
+
+.link-list a:hover{
+text-decoration:underline;
+background:none;
+}
+
+.link-list span{
+display:block;
+color:var(--text);
+font-size:0.9rem;
+line-height:1.4;
+}
+
+.tool-groups{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+gap:16px 22px;
+margin-top:6px;
+}
+
+.tool-group h4,
+.tool-doc h4{
+margin:6px 0 6px 0;
+font-size:1rem;
+font-weight:700;
+color:var(--bio-dark);
+}
+
+.tool-group .link-list{
+list-style:none;
+margin:0;
+padding:0;
+display:flex;
+flex-direction:column;
+gap:10px;
+}
+
+.tool-doc{
+grid-column:1 / -1;
+margin-top:6px;
+padding-top:8px;
+border-top:1px solid var(--border);
+}
+
+.tool-doc p{
+margin:0;
+}
+
+.tool-doc a{
+color:var(--text-muted);
+text-decoration:none;
+font-size:0.9rem;
+font-weight:600;
+}
+
+.tool-doc span{
+display:block;
+margin-top:3px;
+color:var(--text-muted);
+font-size:0.82rem;
+}
+
+footer {
+  position: relative;
+  z-index: 1;
+  background: linear-gradient(180deg, var(--bio-dark) 0%, var(--bio-deep) 100%);
+  color: rgba(255,255,255,0.88);
+  padding: 24px 24px;
+  font-size: 0.9rem;
+  text-align: center;
+  border-top: 1px solid rgba(13,107,92,0.4);
+}
+footer a {
+  color: #9ae6d9;
+  text-decoration: none;
+}
+footer a:hover {
+  text-decoration: underline;
+}
+
+.git-doc a{
+font-size:0.9rem;
+font-weight:500;
+color:var(--text-muted);
+}
+
+.git-doc span{
+font-size:0.82rem;
+color:var(--text-muted);
+}
+
+.about-links{
+  margin-top:10px;
+  margin-bottom:18px;
+  font-size:0.95rem;
+}
+
+.about-links a{
+  color:var(--bio-green);
+  text-decoration:none;
+  font-weight:500;
+}
+
+.about-links a:hover{
+  text-decoration:underline;
+}
+
+.about-section h3{
+  margin:18px 0 8px 0;
+  font-size:1.05rem;
+  color:var(--bio-dark);
+}
+
+.about-section p{
+  margin:0 0 14px 0;
+}
+
+.overview-grid{
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:16px;
+  margin:12px 0 28px 0;
+}
+
+.overview-card{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  text-align:center;
+  justify-content:flex-start;
+  min-height:180px;
+  background:var(--card-bg);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:18px 18px 16px;
+  text-decoration:none;
+  color:var(--text);
+  box-shadow:0 8px 22px rgba(13,107,92,0.06);
+  transition:transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+}
+
+.overview-card:hover{
+  transform:translateY(-2px);
+  border-color:var(--bio-teal);
+  box-shadow:0 12px 28px rgba(13,107,92,0.12);
+}
+
+.overview-number{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:32px;
+  height:32px;
+  border-radius:9px;
+  background:linear-gradient(135deg, var(--bio-green) 0%, var(--bio-teal) 100%);
+  color:#fff;
+  font-weight:700;
+  font-size:0.92rem;
+  margin:0 auto 14px auto;
+}
+
+.overview-card h3{
+  margin:0 0 12px 0;
+  color:var(--bio-dark);
+  font-size:1rem;
+  line-height:1.35;
+}
+
+.overview-lines{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+  color:var(--text-muted);
+  font-size:0.9rem;
+  line-height:1.45;
+}
+
+.overview-lines span{
+  display:block;
+}
+
+@media (max-width: 850px){
+  .overview-grid{
+    grid-template-columns:1fr;
+  }
+
+  .overview-card{
+    min-height:auto;
+  }
+}
+
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner header-row">
+
+    <img src="img/lmu.png" class="logo-left" alt="LMU">
+
+    <div class="header-title">
+      <h1>Programmierpraktikum Bioinformatik</h1>
+      <h2>Gruppe <span class="sequence">17</span></h2>
+    </div>
+
+    <img src="img/tum.png" class="logo-right" alt="TUM">
+
+  </div>
+</header>
+
+<main class="main">
+  <div class="main-panel">
+
+    <section class="intro">
+
+      <div class="team-grid">
+        <div class="team-card">
+          <h4>Team Alignment</h4>
+          <div class="team-members">
+            <div class="member">
+              <img src="img/zeno.jpg" alt="">
+              <div class="member-info">
+                <strong>Zeno Fiocco</strong>
+              </div>
+            </div>
+            <div class="member">
+              <img src="img/silja.jpg" alt="">
+              <div class="member-info">
+                <strong>Silja Ohlsen</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="team-card">
+          <h4>Team GOR</h4>
+          <div class="team-members">
+            <div class="member">
+              <img src="img/lara.jpg" alt="">
+              <div class="member-info">
+                <strong>Lara Gro&szlig;</strong>
+              </div>
+            </div>
+            <div class="member">
+              <img src="img/anna.jpg" alt="">
+              <div class="member-info">
+                <strong>Anna Niederlechner</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+<p>
+<a href="git_guide.html">Git Anleitung</a>
+&nbsp;|&nbsp;
+<a href="faq.html">FAQ</a>
+&nbsp;|&nbsp;
+<a href="about.html"> &Uuml;ber uns</a>
+</p>
+
+<div class="overview-grid">
+
+  <a href="#alignment" class="overview-card">
+    <span class="overview-number">1</span>
+    <h3>Sequence Alignment</h3>
+    <div class="overview-lines">
+      <span>Alignment-Algorithmen</span>
+      <span>Validierung</span>
+      <span>Benchmark-Ergebnisse</span>
+    </div>
+  </a>
+
+  <a href="#gor" class="overview-card">
+    <span class="overview-number">2</span>
+    <h3>Protein Secondary Structure Prediction</h3>
+    <div class="overview-lines">
+      <span>GOR-Modelle</span>
+      <span>Sekund&auml;rstruktur-Vorhersage</span>
+      <span>Performance-Analyse</span>
+    </div>
+  </a>
+
+  <a href="#tools" class="overview-card">
+    <span class="overview-number">3</span>
+    <h3>Additional Bioinformatics Tools</h3>
+    <div class="overview-lines">
+      <span>Werkzeuge f&uuml;r Sequenz-</span>
+      <span>Struktur- und</span>
+      <span>Datenbankanalyse</span>
+    </div>
+  </a>
+
+</div>
+
+<p><strong>Betreuung:</strong> Prof. Dr. Volker Heun, Felix Offensperger, Armin Hadziahmetovic</p>
+ 
+    </section>
+
+    <section class="section" id="alignment">
+      <h2 class="section-title">
+        <span class="icon">1</span>
+        <span class="emoji" aria-hidden="true">&#129516;</span>
+        Sequence Alignment
+      </h2>
+      <div class="desc-block">
+        Implementierung klassischer Alignment-Algorithmen sowie Benchmark- und Validierungsanalysen.
+      </div>
+      <div class="card-grid">
+        <div class="card">
+          <a href="alignment.html">Sequence Alignment</a>
+          <small>Ausf&uuml;hren verschiedener Alignment-Algorithmen mit frei w&auml;hlbaren Parametern.</small>
+        </div>
+        <div class="card">
+          <a href="validation.html">Alignment Validation</a>
+          <small>Vergleich der berechneten Alignments mit Referenz-Alignments.</small>
+        </div>
+        <div class="card">
+          <a href="correlations.html">HOMSTRAD Correlations Benchmark</a>
+          <small>Korrelationsanalyse der HOMSTRAD-Benchmark-Ergebnisse.</small>
+        </div>
+
+        <div class="card">
+          <a href="benchmark.html">Algorithm Benchmark</a>
+          <small>Laufzeitvergleich zwischen Rekursion und Dynamic Programming.</small>
+        </div>
+
+        <div class="card">
+          <a href="tuning.html">Parameter Tuning</a>
+          <small>Optimierung der Alignment-Parameter.</small>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="gor">
+      <h2 class="section-title">
+        <span class="icon">2</span>
+        <span class="emoji" aria-hidden="true">&#129514;</span>
+        Protein Secondary Structure Prediction
+      </h2>
+      <div class="desc-block">
+        Vorhersage der Proteinsekund&auml;rstruktur mit implementierten GOR-Algorithmen (Garnier-Osguthorpe-Robson) und Evaluierung der Modellperformance.
+      </div>
+      <div class="card-grid">
+        <div class="card">
+          <a href="cgi-bin/run_train.py">Train GOR Model</a>
+          <small>GOR-Modell auf eigenen Daten trainieren.</small>
+        </div>
+        <div class="card">
+          <a href="cgi-bin/run_predict.py">Secondary Structure Prediction</a>
+          <small>Vorhersage der Sekundärstruktur mit den implementierten GOR-Methoden.</small>
+        </div>
+	<div class="card">
+    	  <a href="cgi-bin/run_predictGor5.py">Secondary Structure Prediction (GOR5)</a>
+    	  <small>Vorhersage mit GOR5 auf Basis multipler Sequenzalignments (MSA).</small>
+  	</div>
+        <div class="card">
+          <a href="cgi-bin/run_validateGor.py">Validation &amp; Performance</a>
+          <small>Analyse der Modelle und &Uuml;bersicht der Ergebnisse.</small>
+        </div>
+      </div>
+    </section>
+
+<section class="section" id="tools">
+  <h2 class="section-title">
+    <span class="icon">3</span>
+    <span class="emoji" aria-hidden="true">&#128295;</span>
+    Additional Bioinformatics Tools
+  </h2>
+  <div class="desc-block">
+    Kleinere Werkzeuge zur Analyse von Sequenzen, Strukturen und Datenbanken.
+  </div>
+
+  <div class="tool-groups">
+
+  </h2>
+
+  <div class="tool-groups">
+
+  <div class="tool-group">
+    <h4>Sequence Analysis</h4>
+    <ul class="link-list">
+
+      <li>
+      <a href="cgi-bin/aufageb10_web.py">genome2aa</a>
+      <span>DNA to Protein Translation</span>
+      </li>
+
+      <li>
+      <a href="cgi-bin/encode_cgi.cgi">encode</a>
+      <span>Sequenzkodierung</span>
+      </li>
+
+      <li>
+      <a href="cgi-bin/cgi_incidence.py">incidence</a>
+      <span>H&auml;ufigkeitsanalyse</span>
+      </li>
+
+      <li>
+      <a href="cgi-bin/unique_web.py">unique</a>
+      <span>Identifikation einzigartiger Sequenzen</span>
+      </li>
+
+    </ul>
+  </div>
+
+
+  <div class="tool-group">
+    <h4>Database &amp; Retrieval</h4>
+    <ul class="link-list">
+
+      <li>
+      <a href="get_seq.html">get_seq</a>
+      <span>Sequenzabruf aus Datenbanken</span>
+      </li>
+
+      <li>
+      <a href="cgi-bin/acsearch.py">acsearch</a>
+      <span>Suche nach Accession Nummern</span>
+      </li>
+
+      <li>
+      <a href="spkeyword.html">spkeyword</a>
+      <span>SwissProt Keyword Search</span>
+      </li>
+
+      <li>
+      <a href="spkeyword_sql.html">spkeyword_sql</a>
+      <span>SQL-basierte Keyword Suche</span>
+      </li>
+
+    </ul>
+  </div>
+
+
+  <div class="tool-group">
+    <h4>Structure Analysis</h4>
+    <ul class="link-list">
+
+      <li>
+      <a href="makescc.html">makescc</a>
+      <span>Kontaktmatrix aus PDB</span>
+      </li>
+
+      <li>
+      <a href="cgi-bin/homstrad.cgi">homstrad</a>
+      <span>Struktur-basierte Alignment Analyse</span>
+      </li>
+
+      <li>
+      <a href="cgi-bin/psscan_cgi.cgi">psscan</a>
+      <span>PROSITE Pattern Search</span>
+      </li>
+
+    </ul>
+  </div>
+
+
+  <div class="tool-group">
+    <h4>Genome Analysis</h4>
+    <ul class="link-list">
+
+      <li>
+      <a href="cgi-bin/cgi_genome_length.py">genome_length</a>
+      <span>GC-Content Analysis</span>
+      </li>
+
+      <li>
+      <a href="cgi-bin/cgi_get_crispr.py">get_crispr</a>
+      <span>CRISPR Regionen Analyse</span>
+      </li>
+
+    </ul>
+  </div>
+
+
+  <div class="tool-doc">
+    <h4>Project Documentation</h4>
+    <p>
+      <a href="git_guide.txt">Git Anleitung</a><br>
+    </p>
+  </div>
+
+</div>
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  Programmierpraktikum WS 2025/2026 <span>&middot;</span> Gruppe 17 &nbsp;|&nbsp;
+  <a href="alignment.html">Alignment</a> &nbsp;
+  <a href="validation.html">Validation</a> &nbsp;
+  <a href="gor.html">GOR</a>
+</footer>
+
+</body>
+</html>

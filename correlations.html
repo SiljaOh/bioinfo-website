@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HOMSTRAD Correlations Benchmark &ndash; Validation Report</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --green: #059669;
+      --green-light: #10b981;
+      --green-pale: #d1fae5;
+      --green-bg: #ecfdf5;
+      --teal: #0d9488;
+      --teal-light: #2dd4bf;
+      --radius: 16px;
+      --radius-lg: 24px;
+      --nav-h: 64px;
+      --content-max: 1160px;
+      --accent: #059669;
+      --accent-light: #d1fae5;
+      --text: #134e4a;
+      --muted: #0f766e;
+      --border: rgba(16, 185, 129, 0.35);
+      --surface: #fff;
+      --bg: #ecfdf5;
+      --shadow: 0 2px 12px rgba(5, 150, 105, 0.1);
+      --font: "Outfit", system-ui, sans-serif;
+      --bio-green-pale: #d1fae5;
+      --bio-green-light: #d1fae5;
+      --bio-dark: #134e4a;
+    }
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    @keyframes navLinkPop {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    html, body { margin: 0; padding: 0; width: 100%; overflow-x: hidden; }
+    body {
+      font-family: var(--font);
+      background: linear-gradient(135deg, #ffffff 0%, var(--green-bg) 40%, #f0fdf4 70%, #ffffff 100%);
+      background-size: 400% 400%;
+      animation: gradientShift 20s ease infinite;
+      color: var(--text);
+      line-height: 1.65;
+      min-height: 100vh;
+      padding-top: var(--nav-h);
+    }
+    .site-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      height: var(--nav-h);
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(16, 185, 129, 0.2);
+      box-shadow: 0 4px 24px rgba(16, 185, 129, 0.08);
+    }
+    .site-nav-inner {
+      max-width: var(--content-max);
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
+    .site-nav-brand {
+      font-weight: 800;
+      font-size: 1.2rem;
+      background: linear-gradient(135deg, var(--green), var(--teal-light));
+      background-size: 200% 200%;
+      animation: gradientMove 4s ease infinite;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+    .site-nav-brand:hover { opacity: 0.9; text-decoration: none; }
+    .site-nav-links { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem 0.75rem; }
+    .site-nav-links a {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #047857;
+      text-decoration: none;
+      padding: 0.45rem 0.85rem;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+    }
+    .site-nav-links a:hover {
+      color: var(--green);
+      background: var(--green-pale);
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
+      animation: navLinkPop 0.4s ease;
+    }
+    .main {
+      position: relative;
+      z-index: 5;
+      max-width: var(--content-max);
+      margin: -2rem auto 0;
+      padding: 0 1.25rem 3rem;
+    }
+    .main-panel {
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem 2rem 3rem;
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      box-shadow: 0 25px 50px -12px rgba(16, 185, 129, 0.1);
+    }
+    .container { max-width: 960px; margin: 0 auto; padding: 0 1.25rem; }
+    .footer {
+      background: linear-gradient(180deg, #065f46 0%, #047857 100%);
+      color: rgba(255, 255, 255, 0.9);
+      padding: 2rem 1.5rem;
+      font-size: 0.9rem;
+      text-align: center;
+      border-top: 2px solid rgba(16, 185, 129, 0.3);
+    }
+    .footer-brand { display: block; margin-bottom: 1rem; font-weight: 700; color: #fff; }
+    .footer-nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.4rem 1rem; }
+    .footer-nav a { color: #d1fae5; text-decoration: none; font-weight: 500; transition: all 0.25s ease; }
+    .footer-nav a:hover { color: #fff; text-decoration: underline; }
+    .footer-divider { color: rgba(255,255,255,0.5); margin: 0 0.2rem; user-select: none; }
+    @media (max-width: 768px) {
+      .site-nav-inner { flex-wrap: wrap; justify-content: center; padding: 0.5rem 1rem; }
+      .site-nav { height: auto; min-height: var(--nav-h); }
+      body { padding-top: 5.5rem; }
+    }
+    h1 { font-size: 1.55rem; margin: 0 0 0.5rem; color: var(--accent); }
+    .sub { color: var(--muted); margin-bottom: 1.5rem; font-size: 0.93rem; line-height: 1.6; }
+    a { color: var(--accent); }
+    .toc-card {
+      background: linear-gradient(135deg, var(--bio-green-pale) 0%, var(--bio-green-light) 100%);
+      border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem 1.5rem; margin-bottom: 2rem;
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.5rem 1rem;
+    }
+    .toc-card h2 { font-size: 0.95rem; margin: 0 0 0.75rem; color: var(--accent); grid-column: 1 / -1; }
+    .toc-card a { display: block; padding: 0.4rem 0.6rem; border-radius: 6px; font-size: 0.88rem; text-decoration: none; color: var(--text); background: rgba(255,255,255,0.6); }
+    .toc-card a:hover { background: #fff; color: var(--accent); box-shadow: var(--shadow); }
+    .section { margin-bottom: 2.5rem; scroll-margin-top: 5rem; }
+    .section h2 { font-size: 1.15rem; margin: 0 0 0.75rem; color: var(--accent); padding-bottom: 0.45rem; border-bottom: 2px solid var(--accent-light); }
+    .section p { margin: 0 0 0.75rem; }
+    .section ul { margin: 0.5rem 0 1rem 1.25rem; }
+    .section li { margin: 0.4rem 0; }
+    .metric-formula { display: inline-block; margin-top: 0.25rem; padding: 0.15rem 0.45rem; border-radius: 6px; background: rgba(13,107,92,0.1); border: 1px solid rgba(13,107,92,0.16); font-family: "SFMono-Regular", Consolas, monospace; font-size: 0.9em; color: var(--bio-dark); }
+    figure { margin: 1.75rem 0; background: var(--surface); border-radius: var(--radius); padding: 1.25rem; border: 1px solid var(--border); box-shadow: var(--shadow); }
+    figure img { max-width: 100%; height: auto; display: block; border-radius: 8px; }
+    figcaption { font-size: 0.88rem; color: var(--muted); margin-top: 0.75rem; line-height: 1.55; }
+    .highlight { background: linear-gradient(135deg, #e8f6f3 0%, #d4ede8 100%); border-radius: 10px; padding: 1rem 1.25rem; margin: 1rem 0; border-left: 4px solid var(--accent); }
+    .plots-3d-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem 1.25rem; margin: 1.5rem 0; }
+    .plots-3d-grid figure { margin: 0; }
+    .plots-3d-grid figcaption { font-size: 0.82rem; margin-top: 0.5rem; }
+    @media (max-width: 900px) { .plots-3d-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 550px) { .plots-3d-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 700px) { .main-panel { margin: 0 0.75rem; padding: 1.25rem; } .toc-card { grid-template-columns: 1fr 1fr; } }
+  </style>
+</head>
+<body>
+<nav class="site-nav" aria-label="Hauptnavigation">
+  <div class="site-nav-inner">
+    <a href="index.html" class="site-nav-brand">Bioinformatic Tools</a>
+    <div class="site-nav-links">
+      <a href="alignment.html">Alignment</a>
+      <a href="validation.html">Validation</a>
+      <a href="correlations.html">HOMSTRAD Benchmark</a>
+      <a href="tuning.html">Tuning</a>
+      <a href="database.html">Datenbank</a>
+      <a href="about.html">&Uuml;ber uns</a>
+    </div>
+  </div>
+</nav>
+  <main class="main">
+    <div class="main-panel">
+  <div class="container">
+    <h1>HOMSTRAD Correlations Benchmark</h1>
+    <p class="sub">Validierung unserer Alignment-Algorithmen gegen die Referenz-Alignments der HOMSTRAD-Datenbank. Dieser Report dokumentiert den Validierungsprozess, die Metriken sowie die Leistung der <strong>Gotoh</strong>-Varianten (global, local, freeshift) und zum Vergleich <strong>Needleman-Wunsch (NW)</strong>. NW nutzt nur eine lineare Gap-Strafe (kein getrenntes Gap Open/Gap Extend); er erscheint daher nur in den Korrelationsplots (Abschnitt 6), wo er sich deutlich schlechter als Gotoh schl&auml;gt. In den Ergebnissen (ab Abschnitt 4) finden Sie zun&auml;chst Sensitivity/Specificity und MSE vs. Gap Open, danach sechs <strong>3D-Plots</strong> &uuml;ber <strong>Gap Open und Gap Extend</strong> (Global Gotoh, Dayhoff). Alle Grafiken basieren auf <strong>300 zuf&auml;llig gezogenen Sequenzpaaren</strong> aus Train- und Test-Set, mit drei Substitutionsmatrizen (BLOSUM62, PAM250, Dayhoff), drei Gap-Open-Werten (&minus;15, &minus;12, &minus;8) und Gap-Extend &minus;1.</p>
+
+    <nav class="toc-card" aria-label="Inhaltsverzeichnis">
+      <h2>Inhalts&uuml;bersicht</h2>
+      <a href="#sec1">1. Validierungsprozess &amp; Train/Test-Split</a>
+      <a href="#sec2">2. Overfitting-Betrachtung</a>
+      <a href="#sec3">3. Validierungsmetriken</a>
+      <a href="#sec4">4. Sensitivity &amp; Specificity vs. Gap Open</a>
+      <a href="#sec3d">3D-Plots: Metriken &uuml;ber GO/GE (Global Gotoh, Dayhoff)</a>
+      <a href="#sec5">5. Mean Shift Error vs. Gap Open</a>
+      <a href="#sec6">6. Korrelationen zwischen Metriken</a>
+      <a href="#sec7">7. &Uuml;bersicht Global Gotoh</a>
+      <a href="#sec8">8. Fazit</a>
+    </nav>
+
+    <section class="section" id="sec1">
+      <h2>1. Validierungsprozess und Train/Test-Split</h2>
+      <p>Wir validieren unsere Algorithmen gegen die Referenz-Alignments aus der <strong>HOMSTRAD-Datenbank</strong>. HOMSTRAD enth&auml;lt Proteinfamilien mit manuell bzw. strukturbasiert kuratierten Multi-Sequence-Alignments. Aus jeder Familie lesen wir die <code>.ali</code>-Dateien ein und erzeugen daraus <strong>Sequenzpaare</strong> mit bekanntem Referenz-Alignment (die beiden aligneden Sequenzen aus dem MSA).</p>
+      <div class="highlight">
+        <strong>Train/Test-Split:</strong> Die Familien werden <strong>zuf&auml;llig (Seed 42)</strong> in 80% Training und 20% Test aufgeteilt. Alle Sequenzpaare einer Familie geh&ouml;ren entweder vollst&auml;ndig zum Train- oder zum Test-Set. So vermeiden wir Daten-Snooping: Die Test-Familien sind dem Modell nie w&auml;hrend der Auswertung &bdquo;bekannt&ldquo;. Die berichteten Plots und Mittelwerte k&ouml;nnen auf der Train-Stichprobe, der Test-Stichprobe oder auf beiden beruhen (je nach Lauf des Benchmarks); typischerweise wird &uuml;ber beide berichtet, um stabile Sch&auml;tzer zu erhalten.
+      </div>
+      <p>F&uuml;r jede Parameterkombination (Algorithmus, Substitutionsmatrix, Gap-Open, Gap-Extend) f&uuml;hren wir das jeweilige Alignment auf jedem Paar aus, vergleichen das Kandidaten-Alignment mit dem Referenz-Alignment und berechnen die Metriken (s. u.). Die Aggregation erfolgt als <strong>Mittelwert &uuml;ber alle ausgewerteten Paare</strong>. In den hier gezeigten Ergebnissen sind pro Konfiguration jeweils <strong>300 Paare</strong> eingeflossen; die Gesamtzahl der L&auml;ufe umfasst die Gotoh-Varianten (global, local, freeshift), drei Matrizen und drei Gap-Open-Werte.</p>
+    </section>
+
+    <section class="section" id="sec2">
+      <h2>2. Overfitting-Betrachtung</h2>
+      <p>Wir <strong>overfitten nicht</strong> auf die HOMSTRAD-Referenzen, aus folgenden Gr&uuml;nden:</p>
+      <ul>
+        <li><strong>Kein Parameter-Tuning auf dem Test-Set:</strong> Die Parameter (Gap-Open, Gap-Extend, Matrix, Modus) werden nicht anhand der Test-Metriken gew&auml;hlt. Die Plots zeigen die Performance &uuml;ber viele Konfigurationen; eine sp&auml;tere Wahl &bdquo;bester&ldquo; Parameter f&uuml;r Anwendungen kann auf dem Train-Set oder durch Cross-Validation erfolgen.</li>
+        <li><strong>Strikter Split:</strong> Test-Familien sind komplett getrennt von den Train-Familien. Es gibt keine &Uuml;berlappung auf Familienebene.</li>
+        <li><strong>Referenz ist extern:</strong> Die HOMSTRAD-Alignments sind von uns unabh&auml;ngig erzeugte Referenzen. Wir passen weder Modelle noch Features an HOMSTRAD an; wir vergleichen nur unsere Algorithmen-Ausgabe mit dieser Referenz.</li>
+      </ul>
+      <p>Die Kurven in den Plots zeigen daher die <strong>generalisierte</strong> Leistung unserer Algorithmen unter verschiedenen Parametern auf einer repr&auml;sentativen Stichprobe von Proteinfamilien.</p>
+    </section>
+
+    <section class="section" id="sec3">
+      <h2>3. Validierungsmetriken</h2>
+      <p>F&uuml;r jedes Paar (Referenz-Alignment vs. Kandidaten-Alignment) berechnen wir:</p>
+      <ul>
+        <li><strong>Sensitivity (Sensitivit&auml;t):</strong> Anteil der Referenz-Aligned-Paare, die auch im Kandidaten-Alignment vorkommen.
+          <span class="metric-formula">Sensitivity = |ref &cap; cand| / |ref|</span>
+          Hohe Sensitivity bedeutet, dass wir die Referenz-Positionen gut treffen.</li>
+        <li><strong>Specificity (Spezifit&auml;t):</strong> Anteil der Kandidaten-Aligned-Paare, die in der Referenz vorkommen.
+          <span class="metric-formula">Specificity = |ref &cap; cand| / |cand|</span>
+          Hohe Specificity bedeutet weniger &bdquo;falsche&ldquo; Alignments.</li>
+        <li><strong>Mean Shift Error (MSE):</strong> Mittlere absolute Abweichung der alignierten Positionen (Template = Sequenz 1, Target = Sequenz 2). Niedriger ist besser.</li>
+        <li><strong>Inverse Mean Shift Error (inv. MSE):</strong> Wie MSE, mit Template = Sequenz 2, Target = Sequenz 1.</li>
+      </ul>
+      <p>Da Referenz- und Kandidaten-Alignment dieselbe L&auml;nge haben (globale Alignments), sind diese Metriken gut interpretierbar. &Uuml;ber alle ausgewerteten Paare pro Konfiguration bilden wir den <strong>durchschnittlichen Sensitivity, Specificity, MSE und inv. MSE</strong> und tragen sie in den folgenden Grafiken auf.</p>
+    </section>
+
+    <section class="section" id="sec4">
+      <h2>4. Ergebnisse: Sensitivity und Specificity vs. Gap Open</h2>
+      <p>Die folgenden Abbildungen zeigen den durchschnittlichen Sensitivity- und Specificity-Wert in Abh&auml;ngigkeit von den <strong>Gap-Open-Kosten</strong> (Gap-Extend fest bei &minus;1). Pro Panel sind links die <strong>Sensitivity</strong>, rechts die <strong>Specificity</strong> aufgetragen; die x-Achse gibt die Gap-Open-Kosten (&minus;15, &minus;12, &minus;8) wieder. Je nach Modus (Gotoh global, local, freeshift, Needleman-Wunsch global) und Substitutionsmatrix ergeben sich unterschiedliche Kurven. F&uuml;r unsere HOMSTRAD-Referenz-Alignments erweist sich <strong>Gap-Open um &minus;15 bzw. &minus;12</strong> bei Gotoh global als besonders vorteilhaft: Dort erreichen PAM250 und Dayhoff die h&ouml;chsten Werte (Sensitivity und Specificity jeweils im Bereich von etwa 0,69&ndash;0,70); BLOSUM62 liegt etwas darunter (ca. 0,65&ndash;0,68).</p>
+
+      <figure>
+        <img src="plots/plot_sensitivity_specificity_vs_gapopen_global.png" alt="Sensitivity und Specificity vs. Gap Open &ndash; Gotoh global" width="900" height="360">
+        <figcaption><strong>Gotoh global.</strong> Links: mittlere Sensitivity, rechts: mittlere Specificity &uuml;ber die drei Gap-Open-Werte (&minus;15, &minus;12, &minus;8) f&uuml;r BLOSUM62, PAM250 und Dayhoff (jeweils Gap-Extend &minus;1). PAM250 und Dayhoff erreichen die h&ouml;chsten Werte bei &minus;15 und &minus;12; BLOSUM62 liegt etwas niedriger. Mit zunehmendem Gap-Open (weniger strafend, z.&nbsp;B. &minus;8) sinken beide Metriken leicht. Globale Gotoh-Algorithmen liefern unter unseren HOMSTRAD-Referenzen die besten Validierungsergebnisse und eignen sich daher am besten f&uuml;r Szenarien mit Referenz-Alignments gleicher L&auml;nge.</figcaption>
+      </figure>
+      <figure>
+        <img src="plots/plot_sensitivity_specificity_vs_gapopen_local.png" alt="Sensitivity und Specificity vs. Gap Open &ndash; Gotoh local" width="900" height="360">
+        <figcaption><strong>Gotoh local.</strong> Bei lokalem Gotoh (Smith-Waterman-artig) ist ein deutliches Auseinanderlaufen von Sensitivity und Specificity zu beobachten: Die Specificity kann &uuml;ber der Sensitivity liegen (z.&nbsp;B. bei Gap-Open &minus;15), was bedeutet, dass das Kandidaten-Alignment weniger &bdquo;falsche&ldquo; Paare enth&auml;lt, aber daf&uuml;r einen geringeren Anteil der Referenz-Paare abdeckt. Die Kurven f&uuml;r die drei Matrizen verlaufen &auml;hnlich; die Werte liegen insgesamt unter denen von Gotoh global (Sensitivity etwa 0,63&ndash;0,66, Specificity etwa 0,66&ndash;0,71). Dieses Verhalten ist typisch f&uuml;r lokale Alignments und unterstreicht, dass f&uuml;r Referenz-Datenbanken mit globalen Alignments der globale Gotoh-Modus die bessere Wahl ist.</figcaption>
+      </figure>
+      <figure>
+        <img src="plots/plot_sensitivity_specificity_vs_gapopen_freeshift.png" alt="Sensitivity und Specificity vs. Gap Open &ndash; Gotoh freeshift" width="900" height="360">
+        <figcaption><strong>Gotoh freeshift.</strong> Die Freeshift-Variante zeigt f&uuml;r alle drei Matrizen ein &auml;hnliches Muster: Sensitivity und Specificity liegen im mittleren Bereich (ca. 0,63&ndash;0,68) und variieren m&auml;&szlig;ig mit dem Gap-Open. Die Kurven helfen bei der Parameterwahl, wenn Freeshift-Alignments gew&uuml;nscht sind; f&uuml;r die reine &Uuml;bereinstimmung mit unseren globalen HOMSTRAD-Referenzen bleibt Gotoh global &uuml;berlegen.</figcaption>
+      </figure>
+    </section>
+
+    <section class="section" id="sec3d">
+      <h2>3D-Plots: Validierungsmetriken &uuml;ber Gap Open und Gap Extend (Global Gotoh, Dayhoff)</h2>
+      <p>Die folgenden sechs 3D-Oberfl&auml;chenplots zeigen, wie die Validierungsmetriken von <strong>beiden</strong> Parametern abh&auml;ngen: <strong>Gap Open (GO)</strong> von 0 bis &minus;20 in F&uuml;nfer-Schritten und <strong>Gap Extend (GE)</strong> von 0 bis &minus;5 in Einer-Schritten. Alle Plots basieren auf <strong>Global Gotoh</strong> mit der <strong>Dayhoff</strong>-Substitutionsmatrix; die Oberfl&auml;che (Z-Achse) entspricht dem jeweiligen Mittelwert &uuml;ber die validierten HOMSTRAD-Testpaare. So ist auf einen Blick erkennbar, in welchen GO/GE-Bereichen die Metriken optimal sind und wie sich &Auml;nderungen von GO und GE gemeinsam auswirken.</p>
+      <div class="plots-3d-grid">
+        <figure>
+          <img src="plots_3d/plot_3d_sensitivity.png" alt="3D: Sensitivity &uuml;ber Gap Open und Gap Extend" width="400" height="320">
+          <figcaption><strong>Sensitivity.</strong> Anteil der Referenz-Aligned-Paare, die im Kandidaten-Alignment vorkommen (|ref &cap; cand| / |ref|). <em>H&ouml;here Werte = bessere &Uuml;bereinstimmung mit der Referenz.</em> Die Fl&auml;che zeigt, bei welchen Kombinationen aus GO und GE die Sensitivity maximal wird; typischerweise in einem mittleren Bereich (z.&nbsp;B. GO zwischen &minus;10 und &minus;15, GE zwischen &minus;1 und &minus;3). Zu milde Gap-Kosten (GO nahe 0) f&uuml;hren oft zu zu vielen Gaps und damit zu niedrigerer Sensitivity; zu strenge Kosten k&ouml;nnen zu wenige Gaps und ebenfalls suboptimale Alignments liefern.</figcaption>
+        </figure>
+        <figure>
+          <img src="plots_3d/plot_3d_specificity.png" alt="3D: Specificity &uuml;ber Gap Open und Gap Extend" width="400" height="320">
+          <figcaption><strong>Specificity.</strong> Anteil der Kandidaten-Aligned-Paare, die in der Referenz vorkommen (|ref &cap; cand| / |cand|). <em>H&ouml;here Werte = weniger &bdquo;falsche&ldquo; Alignments.</em> Die 3D-Oberfl&auml;che macht sichtbar, wo die Specificity &uuml;ber die GO/GE-Ebene hinweg besonders hoch ist. Oft verl&auml;uft das Optimum in einem &auml;hnlichen Bereich wie bei der Sensitivity; Abweichungen zwischen Sensitivity- und Specificity-Oberfl&auml;che zeigen an, in welchen Parameterecken das Alignment eher &bdquo;zu viel&ldquo; (niedrige Spec) oder &bdquo;zu wenig&ldquo; (niedrige Sens) aligniert.</figcaption>
+        </figure>
+        <figure>
+          <img src="plots_3d/plot_3d_mse.png" alt="3D: Mean Shift Error &uuml;ber Gap Open und Gap Extend" width="400" height="320">
+          <figcaption><strong>Mean Shift Error (MSE).</strong> Mittlere absolute Abweichung der alignierten Positionen (Template = Sequenz 1, Target = Sequenz 2). <em>Niedrigere Werte = bessere Positionsgenauigkeit.</em> Die 3D-Ansicht zeigt, in welchen GO/GE-Kombinationen der MSE minimal wird. Tiefe T&auml;ler in der Oberfl&auml;che entsprechen g&uuml;nstigen Parametereinstellungen; steile Anstiege deuten auf Konfigurationen hin, bei denen die Alignments stark von der Referenz abweichen. So l&auml;sst sich die Parameterwahl gezielt auf minimale Positionsfehler ausrichten.</figcaption>
+        </figure>
+        <figure>
+          <img src="plots_3d/plot_3d_imse.png" alt="3D: Inverse Mean Shift Error &uuml;ber Gap Open und Gap Extend" width="400" height="320">
+          <figcaption><strong>Inverse Mean Shift Error (IMSE).</strong> Wie der MSE, aber mit vertauschter Rolle von Template und Target (Sequenz 2 als Template, Sequenz 1 als Target). <em>Niedrigere Werte = bessere Genauigkeit in dieser Richtung.</em> Die Oberfl&auml;che zeigt, ob das Alignment in beiden Richtungen gleichm&auml;&szlig;ig gut ist oder ob bestimmte GO/GE-Bereiche zu asymmetrischen Fehlern f&uuml;hren. Vergleicht man MSE- und IMSE-3D-Plots, lassen sich Konfigurationen identifizieren, die sowohl MSE als auch IMSE niedrig halten.</figcaption>
+        </figure>
+        <figure>
+          <img src="plots_3d/plot_3d_coverage.png" alt="3D: Coverage &uuml;ber Gap Open und Gap Extend" width="400" height="320">
+          <figcaption><strong>Coverage.</strong> Anteil der Zielpositionen (Sequenz 2) im Kandidaten-Alignment, die auch in der Referenz vorkommen. <em>H&ouml;here Werte = bessere Abdeckung der Referenz-Positionen.</em> Die 3D-Darstellung zeigt, bei welchen Gap-Kosten die berechneten Alignments die Referenz-Positionen am vollst&auml;ndigsten abdecken. In Kombination mit Sensitivity und Specificity hilft die Coverage-Oberfl&auml;che zu verstehen, ob ein Parameterbereich eher &bdquo;viele richtige&ldquo; (hohe Cov + Sens) oder &bdquo;wenige falsche&ldquo; (hohe Spec) Paare erzeugt.</figcaption>
+        </figure>
+        <figure>
+          <img src="plots_3d/plot_3d_f1.png" alt="3D: F1-Score &uuml;ber Gap Open und Gap Extend" width="400" height="320">
+          <figcaption><strong>F1-Score.</strong> Harmonisches Mittel aus Sensitivity und Specificity: F1 = 2&middot;Sens&middot;Spec / (Sens + Spec). <em>H&ouml;here Werte = guter Kompromiss zwischen Sens und Spec.</em> Die 3D-Oberfl&auml;che zeigt, wo &uuml;ber die GO/GE-Ebene hinweg die beste Balance erreicht wird. Das Maximum der F1-Oberfl&auml;che ist oft die praktisch beste Einstellung f&uuml;r eine einzige Parameterkombination, wenn man keine der beiden Metriken bevorzugen m&ouml;chte. So k&ouml;nnen Sie die Gap-Kosten gezielt auf das F1-Maximum ausrichten.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section" id="sec5">
+      <h2>5. Ergebnisse: Mean Shift Error vs. Gap Open</h2>
+      <p>Der <strong>durchschnittliche Mean Shift Error (MSE)</strong> misst, wie stark die alignierten Positionen vom Referenz-Alignment abweichen (Template = Sequenz 1, Target = Sequenz 2). Niedrigere Werte bedeuten bessere &Uuml;bereinstimmung mit der Referenz. Die folgenden vier Grafiken zeigen den mittleren MSE &uuml;ber die 300 Paare in Abh&auml;ngigkeit von den Gap-Open-Kosten f&uuml;r jede Substitutionsmatrix (Gap-Extend &minus;1).</p>
+
+      <figure>
+        <img src="plots/plot_avg_mse_vs_gapopen_global.png" alt="Avg. MSE vs. Gap Open &ndash; Gotoh global" width="700" height="400">
+        <figcaption><strong>Gotoh global &ndash; Avg. Mean Shift Error.</strong> Bei globalem Gotoh erreicht <strong>PAM250</strong> den niedrigsten MSE (ca. 1,62&ndash;1,74 &uuml;ber die drei Gap-Open-Werte), gefolgt von Dayhoff (ca. 1,74&ndash;1,89) und BLOSUM62 (ca. 1,95&ndash;2,23). Der beste Wert liegt bei PAM250 mit Gap-Open &minus;12 bzw. &minus;15. Damit best&auml;tigt sich die Empfehlung aus dem WGdlDB-Text: Gap-Open um &minus;15 (oder &minus;12) und Gap-Extend &minus;1 (bzw. &minus;2) f&uuml;hren zu den geringsten Positionsabweichungen; die Wahl der Matrix hat einen sichtbaren Einfluss auf den MSE.</figcaption>
+      </figure>
+      <figure>
+        <img src="plots/plot_avg_mse_vs_gapopen_local.png" alt="Avg. MSE vs. Gap Open &ndash; Gotoh local" width="700" height="400">
+        <figcaption><strong>Gotoh local &ndash; Avg. MSE.</strong> Beim lokalen Gotoh liegt der mittlere MSE im Bereich von etwa 2,2 bis 3,0 (je nach Matrix und Gap-Open). Die Kurven zeigen, dass keine der getesteten Konfigurationen den niedrigen MSE von Gotoh global erreicht; das ist konsistent damit, dass lokale Alignments nicht notwendigerweise die gesamte Referenz abdecken und die Referenz-Alignments in HOMSTRAD global sind. Die Abh&auml;ngigkeit vom Gap-Open ist moderat; teilweise bringt ein weniger strafender Gap-Open (&minus;8) einen etwas niedrigeren MSE.</figcaption>
+      </figure>
+      <figure>
+        <img src="plots/plot_avg_mse_vs_gapopen_freeshift.png" alt="Avg. MSE vs. Gap Open &ndash; Gotoh freeshift" width="700" height="400">
+        <figcaption><strong>Gotoh freeshift &ndash; Avg. MSE.</strong> Bei Freeshift f&auml;llt auf: F&uuml;r <strong>Gap-Open &minus;15</strong> ist der MSE f&uuml;r alle drei Matrizen sehr hoch (BLOSUM62 und PAM250 im Bereich von etwa 7&ndash;8, Dayhoff etwa 5&ndash;6). Bei <strong>Gap-Open &minus;12 und &minus;8</strong> sinkt der MSE deutlich auf etwa 2,4&ndash;3,3. Das bedeutet, dass Freeshift bei strengeren Gap-Kosten (&minus;15) zu stark von der Referenz abweichenden Alignments f&uuml;hrt; bei weniger strafenden Kosten (&minus;12, &minus;8) n&auml;hert sich der MSE den Werten von Gotoh local an. F&uuml;r Anwendungen, die Freeshift nutzen, empfehlen sich daher eher moderate Gap-Open-Werte (z.&nbsp;B. &minus;12 oder &minus;8), wenn die &Uuml;bereinstimmung mit einer globalen Referenz gemessen werden soll.</figcaption>
+      </figure>
+    </section>
+
+    <section class="section" id="sec6">
+      <h2>6. Korrelationen zwischen Metriken</h2>
+      <p>&Uuml;ber alle Konfigurationen (Modus, Matrix, Gap-Open, Gap-Extend) betrachtet lassen sich folgende Zusammenh&auml;nge festhalten:</p>
+      <ul>
+        <li><strong>Sensitivity und Specificity</strong> sind bei Gotoh global und Freeshift in der Regel positiv korreliert (hohe Sensitivity geht mit hoher Specificity einher). Eine Ausnahme bildet <strong>Gotoh local</strong>, wo Sensitivity und Specificity st&auml;rker divergieren k&ouml;nnen (Specificity kann bei gleicher Konfiguration &uuml;ber der Sensitivity liegen), wie in Abschnitt 4 anhand der lokalen Kurven erl&auml;utert.</li>
+        <li><strong>MSE und inverse MSE</strong> sind in unseren Daten typischerweise stark korreliert: Konfigurationen mit hohem mittlerem MSE haben auch hohen mittleren inversen MSE. Local Gotoh kann etwas st&auml;rker streuen; die Streuung ist bei Freeshift besonders gro&szlig; (sehr hoher MSE bei Gap-Open &minus;15, niedrigerer bei &minus;12 und &minus;8).</li>
+      </ul>
+      <p>Die beiden folgenden Streudiagramme fassen alle Konfigurationen in einem Plot zusammen: Jeder Punkt entspricht einer Kombination aus Modus, Matrix, Gap-Open und Gap-Extend; die Farbe kennzeichnet den Algorithmus/Modus. Dabei ist auch <strong>Needleman-Wunsch (nw_global)</strong> enthalten &ndash; in beiden Korrelationen schneidet er deutlich schlechter ab als die Gotoh-Varianten.</p>
+
+      <figure>
+        <img src="plots/plot_correlation_sensitivity_specificity.png" alt="Korrelation Sensitivity vs. Specificity" width="600" height="500">
+        <figcaption><strong>Korrelation: Sensitivity vs. Specificity.</strong> Jeder Punkt entspricht einer Konfiguration (Modus, Matrix, Gap-Open, Gap-Extend). Die Farben unterscheiden die Modi (global, local, freeshift, <strong>nw_global</strong>). Die Punkte f&uuml;r <strong>Gotoh global</strong> liegen rechts oben (hohe Sensitivity und Specificity, ca. 0,65&ndash;0,70). <strong>Needleman-Wunsch (nw_global)</strong> erscheint hier als eigene Gruppe und schneidet deutlich schlechter ab (ca. 0,47&ndash;0,57), da er nur eine lineare Gap-Strafe hat und keine getrennte Steuerung &uuml;ber Gap Open/Extend. Local und Freeshift liegen dazwischen; bei local ist die Streuung gr&ouml;&szlig;er.</figcaption>
+      </figure>
+      <figure>
+        <img src="plots/plot_correlation_mse_invmse.png" alt="Korrelation MSE vs. inverse MSE" width="600" height="500">
+        <figcaption><strong>Korrelation: Avg. MSE vs. Avg. inverse MSE.</strong> Jeder Punkt ist eine Konfiguration; die Farben kennzeichnen den Modus (inkl. <strong>nw_global</strong>). Die Punkte liegen nahe der Winkelhalbierenden (starke Korrelation zwischen MSE und inversem MSE). Gotoh global konzentriert sich auf niedrige Werte (linke untere Ecke); <strong>Needleman-Wunsch (nw_global)</strong> liegt bei h&ouml;heren MSE-Werten und schneidet auch hier deutlich schlechter ab. Local weist h&ouml;here MSE-Werte auf; Freeshift zeigt die gro&szlig;e Spanne (sehr hoher MSE bei Gap-Open &minus;15, niedrigerer bei &minus;12 und &minus;8).</figcaption>
+      </figure>
+    </section>
+
+    <section class="section" id="sec7">
+      <h2>7. &Uuml;bersicht: Global Gotoh (alle Matrizen)</h2>
+      <p>Die folgende Grafik fasst das Verhalten von <strong>Gotoh global</strong> f&uuml;r alle drei Substitutionsmatrizen in einem Plot zusammen: Sowohl Sensitivity als auch Specificity (durchgezogene und gestrichelte Linien) sind &uuml;ber die Gap-Open-Werte (&minus;15, &minus;12, &minus;8) bei festem Gap-Extend &minus;1 aufgetragen. So ist auf einen Blick erkennbar, welche Matrix bei welchem Gap-Open die besten Werte liefert und wie die beiden Metriken zusammenspielen.</p>
+      <figure>
+        <img src="plots/plot_global_sensitivity_specificity_overview.png" alt="Global Gotoh &ndash; Sensitivity und Specificity &Uuml;bersicht" width="800" height="500">
+        <figcaption><strong>Global Gotoh &ndash; Sensitivity und Specificity</strong> f&uuml;r BLOSUM62, PAM250 und Dayhoff bei Gap-Extend = &minus;1. PAM250 und Dayhoff erreichen die h&ouml;chsten Sensitivity- und Specificity-Werte (bis ca. 0,69&ndash;0,70) bei Gap-Open &minus;15 und &minus;12; BLOSUM62 liegt etwas darunter. Mit weniger strafendem Gap-Open (&minus;8) sinken die Werte leicht. Diese &Uuml;bersicht best&auml;tigt die Empfehlung: <strong>Gap-Open-Kosten um &minus;15 (oder &minus;12)</strong> f&uuml;hren bei globalem Gotoh zu den besten Validierungsergebnissen &uuml;ber alle Metriken und Matrizen hinweg und eignen sich damit optimal f&uuml;r die Parameterwahl in Anwendungen, die gegen HOMSTRAD-&auml;hnliche Referenzen validieren.</figcaption>
+      </figure>
+    </section>
+
+    <section class="section" id="sec8">
+      <h2>8. Fazit</h2>
+      <ul>
+        <li><strong>Global Gotoh</strong> liefert unter unserer HOMSTRAD-Referenz und unserem Validierungs-Setup (300 Paare, 80/20 Train/Test-Split auf Familienebene) die besten Ergebnisse: h&ouml;chste Sensitivity und Specificity (ca. 0,69&ndash;0,70 mit PAM250 und Dayhoff bei Gap-Open &minus;15/&minus;12) und niedrigsten mittleren Mean Shift Error (besonders mit PAM250, ca. 1,62). Die 3D-Plots in den Ergebnissen (nach Abschnitt 4) zeigen zus&auml;tzlich die Abh&auml;ngigkeit von <strong>Gap Open und Gap Extend</strong> gemeinsam (Global Gotoh, Dayhoff).</li>
+        <li><strong>Needleman-Wunsch (NW, nw_global)</strong> erscheint in den Korrelationsplots (Sensitivity vs. Specificity sowie MSE vs. inverse MSE) und schneidet dort <strong>deutlich schlechter</strong> ab: niedrigere Sensitivity/Specificity (ca. 0,47&ndash;0,57) und h&ouml;here MSE-Werte. Da NW nur eine lineare Gap-Strafe hat (kein getrenntes Gap Open/Gap Extend), eignet er sich nicht f&uuml;r die parameterabh&auml;ngigen Ergebnisplots; der Vergleich in Abschnitt 6 unterstreicht den Vorteil der affinen Gap-Kosten (Gotoh) f&uuml;r die Validierung gegen HOMSTRAD.</li>
+        <li>Bei Substitutionsmatrizen <strong>PAM250, BLOSUM62 und Dayhoff</strong> und Gap-Extend &minus;1 sind <strong>Gap-Open-Kosten um &minus;15 bzw. &minus;12</strong> &uuml;ber alle Validierungsmetriken hinweg am vorteilhaftesten; mit &minus;8 verschlechtern sich die Werte leicht.</li>
+        <li>Den <strong>niedrigsten durchschnittlichen Mean Shift Error</strong> erreicht man in unseren L&auml;ufen mit <strong>Gotoh global</strong>, Matrix <strong>PAM250</strong>, Gap-Open <strong>&minus;12 oder &minus;15</strong> und Gap-Extend <strong>&minus;1</strong> (MSE ca. 1,62&ndash;1,65). BLOSUM62 mit Gap-Open &minus;15 und Gap-Extend &minus;2 ist eine ebenfalls bew&auml;hrte Kombination (vgl. WGdlDB-Text).</li>
+        <li><strong>Local Gotoh</strong> zeigt ein charakteristisches Verhalten: Sensitivity und Specificity divergieren (Specificity kann &uuml;ber Sensitivity liegen); der MSE liegt h&ouml;her als bei global (ca. 2,2&ndash;3,0). F&uuml;r Referenz-Datenbanken mit globalen Alignments wie HOMSTRAD ist daher der globale Modus die bessere Wahl.</li>
+        <li><strong>Freeshift</strong> weist bei Gap-Open &minus;15 einen sehr hohen MSE (5&ndash;8) auf; bei &minus;12 und &minus;8 sinkt er auf Werte vergleichbar mit Gotoh local. Bei Einsatz von Freeshift sollte die Gap-Open-Wahl entsprechend angepasst werden.</li>
+        <li>Die hier gezeigten Ergebnisse gelten f&uuml;r unser Setup (HOMSTRAD, 300 Paare, gew&auml;hlte Matrizen und Parameter); jede Anwendung kann andere Anforderungen haben. Die Plots (inkl. der 3D-Oberfl&auml;chen &uuml;ber GO/GE) dienen der <strong>ausf&uuml;hrlichen Parameter-Orientierung</strong> und der transparenten Bewertung von Gotoh und Needleman-Wunsch f&uuml;r die volle Nachvollziehbarkeit der Correlations-Benchmark-Ergebnisse.</li>
+      </ul>
+    </section>
+    </div>
+  </div>
+  </main>
+  <footer class="footer">
+    <span class="footer-brand">Programmierpraktikum WS 2025/2026 &middot; Gruppe 17</span>
+    <nav class="footer-nav" aria-label="Seitennavigation">
+      <a href="index.html">Start</a>
+      <span class="footer-divider">|</span>
+      <a href="alignment.html">Alignment</a>
+      <span class="footer-divider">|</span>
+      <a href="validation.html">Validation</a>
+      <span class="footer-divider">|</span>
+      <a href="correlations.html">HOMSTRAD Benchmark</a>
+      <span class="footer-divider">|</span>
+      <a href="tuning.html">Tuning</a>
+      <span class="footer-divider">|</span>
+      <a href="about.html">&Uuml;ber uns</a>
+    </nav>
+  </footer>
+</body>
+</html>

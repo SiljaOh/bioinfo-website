@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>FAQ | Programmierpraktikum Bioinformatik</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bio-green: #0d6b5c;
+  --bio-green-light: #d4ede8;
+  --bio-green-pale: #e8f6f3;
+  --bio-teal: #2a9d8f;
+  --bio-dark: #0f2926;
+  --bio-deep: #0a1f1c;
+  --text: #1a2e2a;
+  --text-muted: #4a6560;
+  --card-bg: #ffffff;
+  --border: #c5e0db;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "DM Sans", system-ui, sans-serif;
+  background: var(--bio-deep);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(13,107,92,0.06) 0%, transparent 40%),
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(42,157,143,0.15), transparent),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 32px,
+      rgba(13,107,92,0.03) 32px,
+      rgba(13,107,92,0.03) 33px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 32px,
+      rgba(13,107,92,0.03) 32px,
+      rgba(13,107,92,0.03) 33px
+    );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.header {
+  position: relative;
+  background: linear-gradient(160deg, var(--bio-deep) 0%, var(--bio-dark) 40%, var(--bio-green) 100%);
+  color: #fff;
+  padding: 40px 24px 48px;
+  text-align: center;
+  overflow: hidden;
+}
+
+.header::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: linear-gradient(to top, var(--bio-deep), transparent);
+  pointer-events: none;
+}
+
+.header-inner {
+  position: relative;
+  z-index: 1;
+}
+
+.header h1 {
+  margin: 0 0 6px 0;
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+.header h2 {
+  margin: 28px 0 0 0;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: rgba(255,255,255,0.95);
+}
+
+.main {
+  position: relative;
+  z-index: 1;
+  max-width: 920px;
+  margin: -24px auto 0;
+  padding: 0 20px 56px;
+}
+
+.main-panel {
+  background: linear-gradient(180deg, rgba(255,255,255,0.97) 0%, rgba(248,252,251,0.98) 100%);
+  border-radius: 20px;
+  padding: 36px 32px 40px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.25), 0 0 0 1px rgba(255,255,255,0.1) inset;
+  backdrop-filter: blur(8px);
+}
+
+.page-links {
+  margin-bottom: 18px;
+  font-size: 0.98rem;
+}
+
+.page-links a {
+  color: var(--bio-green);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.page-links a:hover {
+  text-decoration: underline;
+}
+
+.section-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--bio-green);
+  margin: 0 0 18px 0;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--bio-green-light);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.section-title .icon {
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, var(--bio-green) 0%, var(--bio-teal) 100%);
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: #fff;
+  font-weight: bold;
+  box-shadow: 0 4px 12px rgba(13,107,92,0.3);
+}
+
+.desc-block {
+  background: linear-gradient(135deg, var(--bio-green-pale) 0%, var(--bio-green-light) 100%);
+  border-radius: 14px;
+  padding: 20px 24px;
+  margin-bottom: 28px;
+  font-size: 0.95rem;
+  color: var(--bio-dark);
+  line-height: 1.6;
+  border: 1px solid var(--border);
+}
+
+.faq-group {
+  margin-bottom: 30px;
+}
+
+.faq-group h3 {
+  margin: 0 0 14px 0;
+  padding-bottom: 8px;
+  border-bottom: 2px solid rgba(13,107,92,0.12);
+  font-size: 1.08rem;
+  color: var(--bio-dark);
+}
+
+.faq-item {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 18px 20px;
+  margin-bottom: 14px;
+  box-shadow: 0 6px 18px rgba(13,107,92,0.05);
+}
+
+.faq-item strong {
+  display: block;
+  margin-bottom: 7px;
+  color: var(--bio-dark);
+  font-size: 0.98rem;
+}
+
+.faq-item p {
+  margin: 0;
+  color: var(--text);
+  font-size: 0.95rem;
+  line-height: 1.65;
+}
+
+.back-link {
+  margin-top: 26px;
+}
+
+.back-link a {
+  color: var(--bio-green);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.back-link a:hover {
+  text-decoration: underline;
+}
+
+footer {
+  position: relative;
+  z-index: 1;
+  background: linear-gradient(180deg, var(--bio-dark) 0%, var(--bio-deep) 100%);
+  color: rgba(255,255,255,0.88);
+  padding: 24px;
+  font-size: 0.9rem;
+  text-align: center;
+  border-top: 1px solid rgba(13,107,92,0.4);
+}
+
+@media (max-width: 700px) {
+  .main-panel {
+    padding: 28px 20px 32px;
+  }
+
+  .section-title {
+    align-items: flex-start;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <h1>Programmierpraktikum Bioinformatik</h1>
+    <h2>Gruppe 17</h2>
+  </div>
+</header>
+
+<main class="main">
+  <div class="main-panel">
+
+    <div class="page-links">
+      <a href="index.html">Startseite</a>
+      &nbsp;|&nbsp;
+      <a href="git_guide.html">Git Anleitung</a>
+      &nbsp;|&nbsp;
+      <a href="about.html"> &Uuml;ber uns</a>
+    </div>
+
+    <h2 class="section-title">
+      <span class="icon">?</span>
+      FAQ - H&auml;ufige Fragen
+    </h2>
+
+    <div class="desc-block">
+      Diese Seite beschreibt die wichtigsten Werkzeuge der Plattform, die im Rahmen des Bioinformatik Programierpraktikums entwickelt wurden. Die Programme k&ouml;nnen &uuml;ber Kommandozeile oder &uuml;ber die Weboberfl&auml;che ausgef&uuml;hrt werden.
+    </div>
+
+    <div class="faq-group">
+      <h3>Allgemein</h3>
+
+      <div class="faq-item">
+        <strong>Wozu dient diese Webseite?</strong>
+        <p>
+          Die Webseite dient als Benutzeroberfl&auml;che f&uuml;r verschiedene bioinformatische Programme, die im Programmierpraktikum implementiert wurden. Die Tools k&ouml;nnen biologische Sequenzen analysieren, Datenbanken durchsuchen und Proteinstrukturen auswerten.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <strong>Welche Arten von Daten werden verarbeitet?</strong>
+        <p>
+          Die Tools arbeiten haupts&auml;chlich mit biologischen Sequenzen und Strukturdateien. Dazu geh&ouml;ren DNA Sequenzen im FASTA Format, Proteinsequenzen aus SwissProt oder UniProt sowie Proteinstrukturen aus der Protein Data Bank (PDB).
+        </p>
+      </div>
+    </div>
+
+    <div class="faq-group">
+      <h3>Sequence Alignment</h3>
+
+      <div class="faq-item">
+        <strong>Was ist ein Sequenzalignment?</strong>
+        <p>
+          Ein Sequenzalignment vergleicht zwei biologische Sequenzen, um &auml;nlichkeiten zwischen ihnen zu identifizieren. Diese &Auml;lichkeiten k&ouml;nnen Hinweise auf gemeinsame evolution&auml;re Herkunft oder funktionelle Beziehungen liefern.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <strong>Wie funktioniert das Alignment Tool?</strong>
+        <p>
+          Das Alignment Tool implementiert klassische Algorithmen der Bioinformatik, insbesondere den Needleman Wunsch Algorithmus f&uuml;r globale Alignments. Die Berechnung basiert auf dynamischer Programmierung und verwendet Substitutionsmatrizen sowie Gap Kosten zur Bewertung der Alignments.
+        </p>
+      </div>
+    </div>
+
+    <div class="faq-group">
+      <h3>Sekund&auml;rstruktur Vorhersage</h3>
+
+      <div class="faq-item">
+        <strong>Was ist GOR?</strong>
+        <p>
+          GOR (Garnier Osguthorpe Robson) ist ein statistisches Verfahren zur Vorhersage der Proteinsekund&auml;rstruktur. Aus einer Aminos&auml;uresequenz wird vorhergesagt, ob eine Position zu einer Helix, einem Beta Strang oder einer Coil Struktur geh&ouml;rt.
+        </p>
+      </div>
+    </div>
+
+    <div class="faq-group">
+      <h3>Datenbank Tools</h3>
+
+      <div class="faq-item">
+        <strong>Was macht das Tool spkeyword?</strong>
+        <p>
+          Dieses Programm durchsucht eine SwissProt Datei nach bestimmten Schl&uuml;sselw&ouml;rtern im Keyword Feld. F&uuml;r alle passenden Eintr&auml;ge werden die Accession Nummern der Proteine ausgegeben.
+        </p>
+      </div>
+
+      <div class="faq-item">
+        <strong>Was macht acsearch?</strong>
+        <p>
+          Dieses Tool ruft eine Proteinsequenz anhand ihrer Accession Nummer aus der UniProt Datenbank ab und gibt sie im FASTA Format aus.
+        </p>
+      </div>
+    </div>
+
+    <div class="faq-group">
+      <h3>Struktur Tools</h3>
+
+      <div class="faq-item">
+        <strong>Was macht makescc?</strong>
+        <p>
+          Dieses Tool berechnet eine Kontaktmatrix aus einer Proteinstruktur. Dazu werden die r&auml;umlichen Abst&auml;nde zwischen Aminos&auml;uren in einer PDB Datei berechnet. Zwei Aminos&auml;uren gelten als Kontakt, wenn ihr Abstand unter einem definierten Schwellenwert liegt.
+        </p>
+      </div>
+    </div>
+
+    <div class="faq-group">
+      <h3>Sequenz Tools</h3>
+
+      <div class="faq-item">
+        <strong>Was macht genome2aa?</strong>
+        <p>
+          Dieses Tool identifiziert Open Reading Frames (ORFs) in DNA Sequenzen und &uuml;bersetzt diese anschlie&szlig;end in Aminos&auml;resequenzen.
+        </p>
+      </div>
+    </div>
+
+    <p class="back-link">
+      <a href="index.html">&larr; Zur&uuml;ck zur Startseite</a>
+    </p>
+
+  </div>
+</main>
+
+<footer>
+Programmierpraktikum Bioinformatik | Gruppe 17 | Wintersemester 2025/2026
+</footer>
+
+</body>
+</html>
