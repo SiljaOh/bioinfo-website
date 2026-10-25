@@ -132,7 +132,7 @@ def searchinDB_AC(wanted):
     # DB-Passwort interaktiv abfragen (nicht im Code speichern)
     # DB-Passwort einmal abfragen und an die DB-Funktion weitergeben
 
-    dbpass = "$1$18yyYqpW$y//O6M/6c6ke8EGazjJTx/"
+    dbpass = os.environ.get("DB_PASS", "")
     connection = pymysql.connect(
         host="mysql2-ext.bio.ifi.lmu.de",
         port=3306,
