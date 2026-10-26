@@ -1,4 +1,4 @@
-# Bioinformatics Toolkit: Sequence Alignment & Secondary Structure Web Server
+# Protein Alignment Server: Sequence Alignment Algorithms, HOMSTRAD Validation & Parameter Tuning
 
 Web server and analysis pipeline built by group 17 in the Bioinformatics programming lab (Programmierpraktikum Bioinformatik), LMU Munich / TUM, winter semester 2025/26.
 
