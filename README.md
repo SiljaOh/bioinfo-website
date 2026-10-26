@@ -4,6 +4,9 @@ Web server and analysis pipeline built by group 17 in the Bioinformatics program
 
 The site bundles our own implementations of classic bioinformatics algorithms behind a web interface: pairwise sequence alignment, protein secondary structure prediction (GOR) and smaller sequence and database tools.
 
+![Gotoh alignment of human α- and β-globin computed with our tool](plots/alignment_example.png)
+<sub>Global alignment of human α- and β-globin computed with our Java implementation of Gotoh (BLOSUM62, gap open −12, gap extend −1): dynamic programming matrix with the optimal traceback (left) and the resulting alignment (right). Script: `src/plot_alignment_example.py`.</sub>
+
 ## My part: sequence alignment (with Zeno Fiocco)
 
 - **Algorithms in Java** (`src/alignment/`): global (Needleman-Wunsch and Gotoh with affine gaps), local (Smith-Waterman) and free-shift alignment, with traceback, score checking and a recursion vs. dynamic programming runtime benchmark
